@@ -1,8 +1,5 @@
 <div align="center">
-
-<p align="center">
-  <img src="./assets/brightdeveloper-banner.png" alt="BrightDeveloper - Build for BrightSign" width="100%">
-</p>
+<img src="./assets/brightdeveloper-banner.png" alt="BrightDeveloper - Build for BrightSign" width="100%">
 
 **The Complete Guide to BrightSign® Development**
 
@@ -11,6 +8,10 @@
 [![BrightSign](https://img.shields.io/badge/brightsign.biz-8A2BE2?style=for-the-badge)](https://brightsign.biz)
 [![Product Documentation](https://img.shields.io/badge/Product%20Docs-701896?style=for-the-badge)](https://docs.brightsign.biz/)
 [![BSN.cloud](https://img.shields.io/badge/BSN%20Cloud-49C0FF?style=for-the-badge)](https://www.bsn.cloud/)
+
+**The Complete Guide to BrightSign® Development**
+
+*Attract. Engage. Captivate.*
 
 ---
 
