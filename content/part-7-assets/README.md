@@ -1,6 +1,6 @@
 <div align="center">
 
-[← Back to Main](../README.md)
+[← Back to Main](../../README.md)
 
 # Part 7: Assets
 
@@ -20,6 +20,6 @@
 
 <div align="center">
 
-[← Back to Main](../README.md)
+[← Back to Main](../../README.md)
 
 </div>

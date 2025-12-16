@@ -1,6 +1,6 @@
 # Chapter 7: JavaScript Node Programs
 
-[← Back to Part 3: JavaScript Development](README.md) | [↑ Main](../README.md)
+[← Back to Part 3: JavaScript Development](README.md) | [↑ Main](../../README.md)
 
 ---
 

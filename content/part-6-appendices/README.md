@@ -1,6 +1,6 @@
 <div align="center">
 
-[← Back to Main](../README.md) · [← Part 5](../part-5-bsn-cloud/README.md)
+[← Back to Main](../../README.md) · [← Part 5](../part-5-bsn-cloud/README.md)
 
 # Part 6: Appendices
 
@@ -32,6 +32,6 @@
 
 <div align="center">
 
-[← Part 5: BSN.cloud](../part-5-bsn-cloud/README.md) · [Back to Main →](../README.md)
+[← Part 5: BSN.cloud](../part-5-bsn-cloud/README.md) · [Back to Main →](../../README.md)
 
 </div>

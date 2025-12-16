@@ -1,6 +1,6 @@
 # Chapter 3: Practical BrightSign Software Development
 
-[← Back to Part 2: BrightScript Development](README.md) | [↑ Main](../README.md)
+[← Back to Part 2: BrightScript Development](README.md) | [↑ Main](../../README.md)
 
 ---
 

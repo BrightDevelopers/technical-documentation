@@ -1,6 +1,6 @@
 <div align="center">
 
-[← Back to Main](../README.md) · [← Part 4](../part-4-advanced-topics/README.md)
+[← Back to Main](../../README.md) · [← Part 4](../part-4-advanced-topics/README.md)
 
 # Part 5: BSN.cloud Integration
 

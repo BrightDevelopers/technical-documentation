@@ -1,6 +1,6 @@
 # Chapter 13: Integrating with BSN.cloud
 
-[← Back to Part 5: BSN Cloud](README.md) | [↑ Main](../README.md)
+[← Back to Part 5: BSN Cloud](README.md) | [↑ Main](../../README.md)
 
 ---
 

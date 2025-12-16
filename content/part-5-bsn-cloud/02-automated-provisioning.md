@@ -1,6 +1,6 @@
 # Automated Provisioning
 
-[← Back to Part 5: BSN Cloud](README.md) | [↑ Main](../README.md)
+[← Back to Part 5: BSN Cloud](README.md) | [↑ Main](../../README.md)
 
 ---
 

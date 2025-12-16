@@ -1,6 +1,6 @@
 <div align="center">
 
-[← Back to Main](../README.md) · [← Part 3](../part-3-javascript-development/README.md)
+[← Back to Main](../../README.md) · [← Part 3](../part-3-javascript-development/README.md)
 
 # Part 4: Advanced Topics
 

@@ -1,6 +1,6 @@
 <div align="center">
 
-[← Back to Main](../README.md) · [← Part 1](../part-1-getting-started/README.md)
+[← Back to Main](../../README.md) · [← Part 1](../part-1-getting-started/README.md)
 
 # Part 2: BrightScript Development
 

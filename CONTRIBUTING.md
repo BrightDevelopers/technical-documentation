@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="part-7-assets/brand/brightsign-logo.png" alt="BrightSign" width="300">
+<img src="content/part-7-assets/brand/brightsign-logo.png" alt="BrightSign" width="300">
 
 # Contributing to BrightDeveloper
 

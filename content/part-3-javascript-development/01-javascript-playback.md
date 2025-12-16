@@ -1,6 +1,6 @@
 # Chapter 6: JavaScript Playback
 
-[← Back to Part 3: JavaScript Development](README.md) | [↑ Main](../README.md)
+[← Back to Part 3: JavaScript Development](README.md) | [↑ Main](../../README.md)
 
 ---
 

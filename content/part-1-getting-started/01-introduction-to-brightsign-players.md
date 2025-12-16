@@ -1,6 +1,6 @@
 # Chapter 1: Introduction to BrightSign Players
 
-[← Back to Part 1: Getting Started](README.md) | [↑ Main](../README.md)
+[← Back to Part 1: Getting Started](README.md) | [↑ Main](../../README.md)
 
 ---
 

@@ -1,6 +1,6 @@
 # Troubleshooting
 
-[← Back to Appendices](README.md) | [↑ Main](../README.md)
+[← Back to Appendices](README.md) | [↑ Main](../../README.md)
 
 ---
 

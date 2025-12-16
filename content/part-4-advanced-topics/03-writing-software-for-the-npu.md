@@ -1,6 +1,6 @@
 # Chapter 10: Writing Software for the NPU
 
-[← Back to Part 4: Advanced Topics](README.md) | [↑ Main](../README.md)
+[← Back to Part 4: Advanced Topics](README.md) | [↑ Main](../../README.md)
 
 ---
 

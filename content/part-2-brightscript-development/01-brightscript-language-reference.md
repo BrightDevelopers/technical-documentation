@@ -1,6 +1,6 @@
 # BrightScript Language Reference Manual 
 
-[← Back to Part 2: BrightScript Development](README.md) | [↑ Main](../README.md)
+[← Back to Part 2: BrightScript Development](README.md) | [↑ Main](../../README.md)
 
 ---
 

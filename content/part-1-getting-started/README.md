@@ -1,6 +1,6 @@
 <div align="center">
 
-[← Back to Main](../README.md)
+[← Back to Main](../../README.md)
 
 # Part 1: Getting Started
 
@@ -46,6 +46,6 @@ After completing Part 1, continue your journey:
 
 <div align="center">
 
-[← Back to Main](../README.md) · [Part 2: BrightScript Development →](../part-2-brightscript-development/README.md)
+[← Back to Main](../../README.md) · [Part 2: BrightScript Development →](../part-2-brightscript-development/README.md)
 
 </div>
