@@ -84,42 +84,6 @@ Production-ready code samples and complete projects you can use as starting poin
 
 ---
 
-## Resources
-
-<table>
-<tr>
-<td width="33%" align="center">
-
-**Official Docs**
-
-[docs.brightsign.biz](https://docs.brightsign.biz/)
-
-Complete technical documentation
-
-</td>
-<td width="33%" align="center">
-
-**GitHub**
-
-[github.com/brightsign](https://github.com/brightsign)
-
-Open source tools and SDKs
-
-</td>
-<td width="33%" align="center">
-
-**BSN.cloud**
-
-[bsn.cloud](https://www.bsn.cloud/)
-
-Cloud management platform
-
-</td>
-</tr>
-</table>
-
----
-
 ## Support
 
 Need help? BrightSign provides comprehensive support resources:
