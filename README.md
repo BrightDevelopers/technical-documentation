@@ -24,101 +24,63 @@ If you need information on how to **use these BrightSign products**, please see 
 
 ---
 
-## Documentation
+## What's Here
 
-### Part 1: Getting Started
+This repository is organized into three main areas to help you find what you need:
 
-> *Learn the fundamentals of BrightSign hardware and set up your development environment.*
+<table>
+<tr>
+<td width="33%" align="center" valign="top">
 
-| Chapter | Description |
-|---------|-------------|
-| [Introduction to BrightSign Players](documentation/part-1-getting-started/01-introduction-to-brightsign-players.md) | Hardware overview, models, and capabilities |
+### [Technical Documentation](documentation/README.md)
 
-[**Explore Part 1 →**](documentation/part-1-getting-started/README.md)
+**In-depth reference materials**
 
----
+Comprehensive API documentation, language references, and detailed technical specifications for BrightSign development.
 
-### Part 2: BrightScript Development
+- BrightScript Language Reference
+- JavaScript Development
+- Native Extensions & NPU
+- BSN.cloud Integration
+- Hardware Integrations
 
-> *Master BrightScript, the native scripting language for BrightSign players.*
+[**Explore Documentation →**](documentation/README.md)
 
-| Chapter | Description |
-|---------|-------------|
-| [BrightScript Language Reference](documentation/part-2-brightscript-development/01-brightscript-language-reference.md) | Syntax, types, and language fundamentals |
-| [Practical Development](documentation/part-2-brightscript-development/02-practical-development.md) | Real-world development techniques |
-| [Debugging BrightScript](documentation/part-2-brightscript-development/03-debugging-brightscript.md) | Tools and strategies for debugging |
-| [Design Patterns](documentation/part-2-brightscript-development/04-design-patterns.md) | Best practices and patterns |
-| [Plugin Architecture](documentation/part-2-brightscript-development/05-plugin-architecture.md) | Building modular applications |
+</td>
+<td width="33%" align="center" valign="top">
 
-[**Explore Part 2 →**](documentation/part-2-brightscript-development/README.md) · [**View Examples →**](documentation/part-2-brightscript-development/examples/README.md)
+### [How-To Articles](howto-articles/README.md)
 
----
+**Step-by-step guides**
 
-### Part 3: JavaScript Development
+Task-focused tutorials that walk you through common development scenarios from start to finish.
 
-> *Build modern web applications and Node.js programs for BrightSign players.*
+- Getting started guides
+- Integration walkthroughs
+- Configuration tutorials
+- Troubleshooting guides
 
-| Chapter | Description |
-|---------|-------------|
-| [JavaScript Playback](documentation/part-3-javascript-development/01-javascript-playback.md) | HTML5 and web content playback |
-| [JavaScript Node Programs](documentation/part-3-javascript-development/02-javascript-node-programs.md) | Server-side JavaScript development |
-| [Debugging JavaScript](documentation/part-3-javascript-development/03-debugging-javascript.md) | Chrome DevTools and debugging techniques |
+[**Browse How-To Articles →**](howto-articles/README.md)
 
-[**Explore Part 3 →**](documentation/part-3-javascript-development/README.md) · [**View Examples →**](documentation/part-3-javascript-development/examples/README.md)
+</td>
+<td width="33%" align="center" valign="top">
 
----
+### [Practical Examples](practical-examples/README.md)
 
-### Part 4: Advanced Topics
+**Ready-to-use code**
 
-> *Unlock advanced capabilities with native extensions, AI/ML, and hardware integrations.*
+Production-ready code samples and complete projects you can use as starting points for your own applications.
 
-| Chapter | Description |
-|---------|-------------|
-| [Introduction to Native Extensions](documentation/part-4-advanced-topics/01-intro-to-extensions.md) | Getting started with C/C++ extensions |
-| [Advanced Native Extensions](documentation/part-4-advanced-topics/02-advanced-extensions.md) | Complex extension development |
-| [Writing Software for the NPU](documentation/part-4-advanced-topics/03-writing-software-for-the-npu.md) | Neural Processing Unit programming |
-| [Hardware Integrations](documentation/part-4-advanced-topics/04-hardware-integrations.md) | GPIO, serial, and peripherals |
+- BrightScript examples
+- JavaScript/HTML5 samples
+- Node.js applications
+- API integration scripts
 
-[**Explore Part 4 →**](documentation/part-4-advanced-topics/README.md) · [**View Examples →**](documentation/part-4-advanced-topics/examples/README.md)
+[**View Examples →**](practical-examples/README.md)
 
----
-
-### Part 5: BSN.cloud Integration
-
-> *Connect to BSN.cloud for enterprise content management and fleet control.*
-
-| Chapter | Description |
-|---------|-------------|
-| [Integrating with BSN.cloud](documentation/part-5-bsn-cloud/01-integrating-with-bsn-cloud.md) | Platform overview and authentication |
-| [Automated Provisioning](documentation/part-5-bsn-cloud/02-automated-provisioning.md) | Streamline device deployment |
-| [Per-Player Control](documentation/part-5-bsn-cloud/03-per-player-control.md) | Individual player management |
-| [BSN.content](documentation/part-5-bsn-cloud/04-bsn-content.md) | Content management and distribution |
-
-[**Explore Part 5 →**](documentation/part-5-bsn-cloud/README.md) · [**View Examples →**](documentation/part-5-bsn-cloud/examples/README.md)
-
----
-
-### Appendices
-
-| Resource | Description |
-|----------|-------------|
-| [API Reference](documentation/part-6-appendices/api-reference.md) | Complete API documentation |
-| [Troubleshooting](documentation/part-6-appendices/troubleshooting.md) | Common issues and solutions |
-
-[**View Appendices →**](documentation/part-6-appendices/README.md)
-
----
-
-## Code Examples
-
-Practical, production-ready code examples to accelerate your development:
-
-| Section | Language | Content |
-|---------|----------|---------|
-| [BrightScript Examples](documentation/part-2-brightscript-development/examples/README.md) | BrightScript | 27 examples covering foundations, objects, media, and production patterns |
-| [JavaScript Examples](documentation/part-3-javascript-development/examples/README.md) | JavaScript/HTML5 | Web widgets and Node.js programs |
-| [Extension Examples](documentation/part-4-advanced-topics/examples/README.md) | C/C++ | Native extension development |
-| [Cloud Examples](documentation/part-5-bsn-cloud/examples/README.md) | Python/JavaScript | BSN.cloud API integration scripts |
+</td>
+</tr>
+</table>
 
 ---
 
