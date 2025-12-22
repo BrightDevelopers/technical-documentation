@@ -1,12 +1,9 @@
 <div align="center">
 <img src="./documentation/part-7-assets/brightdeveloper-banner.png" alt="BrightDeveloper - Build for BrightSign" width="100%">
 
-**The Complete Guide to BrightSign® Development**
-
-*Attract. Engage. Captivate.*
+**Build on BrightSign. Ship in hours, not weeks.**
 
 [![BrightSign](https://img.shields.io/badge/brightsign.biz-8A2BE2?style=for-the-badge)](https://brightsign.biz)
-[![Product Documentation](https://img.shields.io/badge/Product%20Docs-701896?style=for-the-badge)](https://docs.brightsign.biz/)
 [![BSN.cloud](https://img.shields.io/badge/BSN%20Cloud-49C0FF?style=for-the-badge)](https://www.bsn.cloud/)
 
 </div>
@@ -15,20 +12,35 @@
 
 ## About BrightDeveloper
 
-**BrightDeveloper** is the official developer program from [BrightSign®](https://brightsign.biz), the global market leader in digital signage media players.
+**BrightDeveloper** is BrightSign's developer program—clear documentation, a complete SDK, and working examples designed for both humans and AI assistants.
 
-This GitHub organization is "**by developers __for__ developers**" and hosts detailed Engineering and API documentation, example code, SDKs, and open-source tools to help you build applications that integrate with BrightSign.
+Our goal: **your first successful API call in under 15 minutes**, and a clear path from "Hello World" to a fully working application.
 
-These pages are specific to folks writing software that works with BrightSign.  If you don't write code you might be delighted with the core BrightSign products - including our award-winning low-code/no-code media authoring tool [**BrightAuthor:connected**](https://www.brightsign.biz/brightauthor-connected/) and/or our award-winning media-player control system [**BSN.cloud**](https://www.brightsign.biz/bsn-cloud/).
-If you need information on how to **use these BrightSign products**, please see the [BrightSign Support Site.](https://www.brightsign.biz/support).
+This repo contains technical documentation and guides. If you're building a cloud integration, start with the **[gopurple SDK](https://github.com/BrightDevelopers/gopurple)**—it's the fastest way to get working code.
 
-But if you are a software developer who wants to **build things** using BrightSign, you are in the right place!
+If you don't write code, check out [BrightAuthor:connected](https://www.brightsign.biz/brightauthor-connected/) and [BSN.cloud](https://www.brightsign.biz/bsn-cloud/).
 
 ---
 
-## What's Here
+## Start Here: The Go SDK
 
-This repository is organized into three main areas to help you find what you need:
+**[gopurple](https://github.com/BrightDevelopers/gopurple)** is our Go SDK for BSN.cloud—the fastest way to build cloud integrations.
+
+```go
+client, _ := gopurple.New()
+client.Authenticate(ctx)
+devices, _ := client.Devices.List(ctx, nil)
+```
+
+The SDK includes **73 working example programs**—not snippets, but complete CLI tools you can run immediately. It handles authentication, pagination, error handling, and remote device control.
+
+**Why Go?** AI writes excellent Go code. Strong typing catches errors at compile time. Single binary deployment—no dependency management. And the patterns translate: AI assistants can reference gopurple to generate correct code in Python, TypeScript, or any language.
+
+---
+
+## What's in This Repo
+
+This repository contains documentation and guides. For working code, see the SDK and example repos.
 
 <table>
 <tr>
@@ -38,7 +50,7 @@ This repository is organized into three main areas to help you find what you nee
 
 **In-depth reference materials**
 
-Comprehensive API documentation, language references, and detailed technical specifications for BrightSign development.
+Comprehensive API documentation, language references, and detailed technical specifications.
 
 - BrightScript Language Reference
 - JavaScript Development
@@ -55,7 +67,7 @@ Comprehensive API documentation, language references, and detailed technical spe
 
 **Step-by-step guides**
 
-Task-focused tutorials that walk you through common development scenarios from start to finish.
+Task-focused tutorials that walk you through common development scenarios.
 
 - Getting started guides
 - Integration walkthroughs
@@ -71,12 +83,13 @@ Task-focused tutorials that walk you through common development scenarios from s
 
 **Ready-to-use code**
 
-Production-ready code samples and complete projects you can use as starting points for your own applications.
+Code samples and projects for on-player development.
 
 - BrightScript examples
 - JavaScript/HTML5 samples
 - Node.js applications
-- API integration scripts
+
+*For cloud API examples, see [gopurple](https://github.com/BrightDevelopers/gopurple)*
 
 [**View Examples →**](practical-examples/README.md)
 
