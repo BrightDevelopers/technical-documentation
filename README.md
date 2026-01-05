@@ -12,7 +12,7 @@
 
 ## About BrightDeveloper
 
-**BrightDeveloper** is BrightSign's developer program—clear documentation, a complete SDK, and working examples designed for both humans and AI assistants.
+**BrightDeveloper** is BrightSign's developer program — we aim to provide clear documentation, a complete SDK, and working examples designed for both humans and AI assistants.
 
 Our goal: **your first successful API call in under 15 minutes**, and a clear path from "Hello World" to a fully working application.
 
