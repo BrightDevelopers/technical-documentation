@@ -30,18 +30,22 @@ Essential guides for developers new to BrightSign. Start here to set up your env
 
 ---
 
-## Coming Soon
+## Media Playback
 
-We're actively developing how-to articles for the following topics:
-
-### Media Playback
+Master video, image, and audio playback with these comprehensive guides covering everything from basic playback to advanced multi-zone layouts.
 
 | Article | Description |
 |---------|-------------|
-| Playing Video Content | Load and control video playback |
-| Creating an Image Slideshow | Display rotating images with transitions |
-| Audio Playback and Control | Manage audio output and playlists |
-| Multi-Zone Layouts | Create complex screen layouts with multiple content zones |
+| [Playing Video Content](05-playing-video-content.md) | Load and control video playback with roVideoPlayer and HTML5 |
+| [Creating an Image Slideshow](06-creating-image-slideshow.md) | Display rotating images with transitions and preloading |
+| [Audio Playback and Control](07-audio-playback-control.md) | Manage audio output, routing, and volume control |
+| [Multi-Zone Layouts](08-multi-zone-layouts.md) | Create complex screen layouts with multiple content zones |
+
+---
+
+## Coming Soon
+
+We're actively developing how-to articles for the following topics:
 
 ### Networking & Cloud
 
@@ -65,7 +69,7 @@ We're actively developing how-to articles for the following topics:
 
 | Article | Description |
 |---------|-------------|
-| Building Custom Extensions | Create native C/C++ extensions |
+| Building Custom Extensions | Create compiled-language extensions |
 | Debugging Production Issues | Diagnose problems on deployed players |
 | Performance Optimization | Improve playback performance and memory usage |
 | Secure Deployment Practices | Implement security best practices |
