@@ -18,18 +18,21 @@ How-To articles provide task-focused tutorials that walk you through common Brig
 
 ---
 
-## Coming Soon
+## Getting Started
 
-We're actively developing how-to articles for the following topics:
-
-### Getting Started
+Essential guides for developers new to BrightSign. Start here to set up your environment and create your first applications.
 
 | Article | Description |
 |---------|-------------|
-| Setting Up Your Development Environment | Configure your workstation for BrightSign development |
-| Your First BrightScript Application | Create and deploy a simple BrightScript program |
-| Your First HTML5 Application | Build and deploy a web-based presentation |
-| Connecting to Your Player | Establish network connectivity and access the diagnostic web server |
+| [Setting Up Your Development Environment](01-setting-up-development-environment.md) | Configure your workstation for BrightSign development |
+| [Your First BrightScript Application](02-first-brightscript-application.md) | Create and deploy a simple BrightScript program |
+| [Your First HTML5 Application](03-first-html5-application.md) | Build and deploy a web-based presentation |
+
+---
+
+## Coming Soon
+
+We're actively developing how-to articles for the following topics:
 
 ### Media Playback
 

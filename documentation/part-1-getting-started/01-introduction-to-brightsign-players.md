@@ -31,7 +31,7 @@ BrightSign players are specialized embedded systems optimized for continuous ope
 
 ## Player Models & Specifications
 
-BrightSign organizes its product line into series. Series 5 (introduced 2020) represents the current mainstream generation, with Series 6 beginning rollout in 2025. Product names follow the pattern `[Family][Model Number]`, where the family code indicates the use case and the final digit indicates the series generation.
+BrightSign organizes its product line into series. Series 5 (introduced 2023) represents the current mainstream generation, with Series 6 beginning rollout in late 2025. Product names follow the pattern `[Family][Model Number]`, where the family code indicates the use case and the final digit indicates the series generation.
 
 **Family Codes:**
 | Code | Description |
@@ -106,7 +106,7 @@ All Series 5 and newer players purchased after January 1, 2025 include a **5-yea
 BrightSign OS (BOS) is a customized Linux distribution built on the Yocto and OpenEmbedded projects. The architecture reflects a minimal-footprint philosophy: rather than starting with a full Linux distribution and removing components, BOS was constructed from a clean slate with only essential functionality.
 
 **Current Versions:**
-- **BOS 9.x**: Current release with Chromium 87 (default) or 120 (beta), Node.js 14.17.6 or 18.18.2
+- **BOS 9.x**: Current release with Chromium 87 (9.0.x) or 120 (9.1.x), Node.js 14.17.6 or 18.18.2
 - **BOS 8.x**: Stable release with Chromium 69-87, Node.js 10.15.3-14.17.6
 - Series 5 players support Chromium 110/120 upgrades for latest web standards
 
@@ -137,10 +137,9 @@ BrightSign development requires both hardware and software components.
 - Network connection (Ethernet recommended for development)
 - Optional: USB-to-serial adapter for console access
 
-**Development Tools:**
+<insert link for cable>
 
-**BrightSign Shell & BrightScript Debugger**
-Command-line interface for BrightSign OS interaction via serial cable (115200 baud, 8N1) or telnet/SSH. The BrightScript debugger provides breakpoints, variable inspection, and step-through debugging.
+**Development Tools:**
 
 **Diagnostic Web Server (DWS)**
 Built-in web interface accessible at `http://<player-ip>` providing:
@@ -172,12 +171,32 @@ Players ship with two Node.js instances:
 | BOS 8.5.x - 9.0.x | 14.17.6 |
 | BOS 8.1.x - 8.3.x | 10.15.3 |
 
-**Command-Line Interface**
+**Local DWS Command-Line Interface (requires Local DWS to be enabled)**
 The `@brightsign/bsc` CLI tool communicates with the Local DWS REST APIs:
 ```bash
 npm install -g @brightsign/bsc
 ```
 Provides file operations, registry management, screenshots, power control, and system diagnostics from your development machine.
+
+**Remote DWS Command-Line Interface (requires use of BSN.cloud)**
+
+The [gopurple SDK](https://github.com/BrightDevelopers/gopurple) includes 34 ready-to-use command-line tools for remote device management via the Remote Diagnostic Web Server (rDWS) API. These tools enable you to manage players from anywhere through BSN.cloud.
+
+Key capabilities include:
+- Device information and health monitoring (`rdws-info`, `rdws-health`, `rdws-diagnostics`)
+- Remote reboot and reprovisioning (`rdws-reboot`, `rdws-reprovision`)
+- File operations on player storage (`rdws-files-list`, `rdws-files-upload`, `rdws-files-delete`)
+- Network troubleshooting (`rdws-ping`, `rdws-dns-lookup`, `rdws-traceroute`, `rdws-packet-capture`)
+- Log and crash dump retrieval (`rdws-logs-get`, `rdws-crashdump-get`)
+- Registry management (`rdws-registry-get`, `rdws-registry-set`)
+- Remote access configuration (`rdws-ssh`, `rdws-telnet`, `rdws-dws-password`)
+- Screenshot capture (`rdws-snapshot`)
+
+See the complete list with usage examples in the [gopurple examples documentation](https://github.com/BrightDevelopers/gopurple/blob/main/examples/README.md#remote-dws-operations-34).
+
+**BrightSign Shell & BrightScript Debugger**
+Command-line interface for BrightSign OS interaction via serial cable (115200 baud, 8N1) or telnet/SSH. The BrightScript debugger provides breakpoints, variable inspection, and step-through debugging.
+
 
 **Development Resources:**
 - GitHub: [brightsign/player-cli](https://github.com/brightsign/player-cli) - Alternative lightweight CLI

@@ -22,6 +22,8 @@ If you don't write code, check out [BrightAuthor:connected](https://www.brightsi
 
 ---
 
+# BSN.cloud
+
 ## Start Here: The Go SDK
 
 **[gopurple](https://github.com/BrightDevelopers/gopurple)** is our Go SDK for BSN.cloud—the fastest way to build cloud integrations.
@@ -38,7 +40,44 @@ The SDK includes **73 working example programs**—not snippets, but complete CL
 
 ---
 
-## What's in This Repo
+# BrightSign Players
+
+Build applications that run directly on BrightSign hardware. Choose the development approach that fits your skills and requirements.
+
+### Getting Started
+
+New to BrightSign? Start here to understand the hardware platform, player models, and development options.
+
+[**Introduction to BrightSign Players →**](documentation/part-1-getting-started/01-introduction-to-brightsign-players.md)
+
+### BrightScript
+
+BrightSign's native scripting language for maximum performance and direct hardware control.
+
+[**BrightScript Development →**](documentation/part-2-brightscript-development/README.md)
+
+### Browser-based Apps
+
+Build HTML5/JavaScript applications using the integrated Chromium rendering engine.
+
+[**JavaScript Playback →**](documentation/part-3-javascript-development/01-javascript-playback.md)
+
+### Node Apps
+
+Run server-side JavaScript on the player with access to both Node.js modules and DOM objects.
+
+[**Node.js Programs →**](documentation/part-3-javascript-development/02-javascript-node-programs.md)
+
+### Extensions
+
+Advanced: write compiled-language extensions for custom background services, and system-level integrations. Note that to distribute extensions to non-development players you will be required to have BrightSign "sign" your application bundle.
+
+[**Native Extensions →**](documentation/part-4-advanced-topics/01-intro-to-extensions.md)
+
+---
+
+
+# What's in This Repo
 
 This repository contains documentation and guides. For working code, see the SDK and example repos.
 
@@ -121,6 +160,6 @@ We welcome contributions from the community! Please see [CONTRIBUTING.md](CONTRI
 
 **Brought to Life by BrightSign®**
 
-© 2025 BrightSign LLC. All rights reserved.
+© 2025-2026 BrightSign LLC. All rights reserved.
 
 </div>
