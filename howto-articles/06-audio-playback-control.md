@@ -762,10 +762,10 @@ End Function
 
 ## Next Steps
 
-- [Multi-Zone Layouts](08-multi-zone-layouts.md) - Combine audio with video and images
-- [Playing Video Content](05-playing-video-content.md) - Video with audio control
+- [Multi-Zone Layouts](07-multi-zone-layouts.md) - Combine audio with video and images
+- [Playing Video Content](04-playing-video-content.md) - Video with audio control
 - [roAudioPlayer Reference](https://docs.brightsign.biz/developers/roaudioplayer) - Complete API documentation
 
 ---
 
-[← Previous: Creating an Image Slideshow](06-creating-image-slideshow.md) | [Next: Multi-Zone Layouts →](08-multi-zone-layouts.md)
+[← Previous: Creating an Image Slideshow](05-creating-image-slideshow.md) | [Next: Multi-Zone Layouts →](07-multi-zone-layouts.md)

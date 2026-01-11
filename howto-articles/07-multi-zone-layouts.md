@@ -950,11 +950,11 @@ End Function
 
 ## Next Steps
 
-- [Playing Video Content](05-playing-video-content.md) - Detailed video playback
-- [Creating an Image Slideshow](06-creating-image-slideshow.md) - Image transitions
-- [Audio Playback and Control](07-audio-playback-control.md) - Add audio to layouts
+- [Playing Video Content](04-playing-video-content.md) - Detailed video playback
+- [Creating an Image Slideshow](05-creating-image-slideshow.md) - Image transitions
+- [Audio Playback and Control](06-audio-playback-control.md) - Add audio to layouts
 - [roVideoMode Reference](https://docs.brightsign.biz/developers/rovideomode) - Complete API documentation
 
 ---
 
-[← Previous: Audio Playback and Control](07-audio-playback-control.md) | [Back to How-To Articles](README.md)
+[← Previous: Audio Playback and Control](06-audio-playback-control.md) | [Back to How-To Articles](README.md)

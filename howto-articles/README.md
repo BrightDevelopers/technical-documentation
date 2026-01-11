@@ -36,43 +36,49 @@ Master video, image, and audio playback with these comprehensive guides covering
 
 | Article | Description |
 |---------|-------------|
-| [Playing Video Content](05-playing-video-content.md) | Load and control video playback with roVideoPlayer and HTML5 |
-| [Creating an Image Slideshow](06-creating-image-slideshow.md) | Display rotating images with transitions and preloading |
-| [Audio Playback and Control](07-audio-playback-control.md) | Manage audio output, routing, and volume control |
-| [Multi-Zone Layouts](08-multi-zone-layouts.md) | Create complex screen layouts with multiple content zones |
+| [Playing Video Content](04-playing-video-content.md) | Load and control video playback with roVideoPlayer and HTML5 |
+| [Creating an Image Slideshow](05-creating-image-slideshow.md) | Display rotating images with transitions and preloading |
+| [Audio Playback and Control](06-audio-playback-control.md) | Manage audio output, routing, and volume control |
+| [Multi-Zone Layouts](07-multi-zone-layouts.md) | Create complex screen layouts with multiple content zones |
 
 ---
 
-## Coming Soon
+## Networking & Cloud
 
-We're actively developing how-to articles for the following topics:
-
-### Networking & Cloud
+Connect your players to the internet, integrate with APIs, and display live data.
 
 | Article | Description |
 |---------|-------------|
-| Fetching Remote Content | Download and cache content from web servers |
-| Integrating with REST APIs | Consume external APIs in your applications |
-| Setting Up BSN.cloud | Connect your player to BrightSign's cloud platform |
-| Implementing Live Data Feeds | Display real-time information from external sources |
+| [Fetching Remote Content](08-fetching-remote-content.md) | Download and cache content from web servers |
+| [Integrating with REST APIs](09-integrating-rest-apis.md) | Consume external APIs in your applications |
+| [Setting Up BSN.cloud](10-setting-up-bsn-cloud.md) | Connect your player to BrightSign's cloud platform |
+| [Implementing Live Data Feeds](11-implementing-live-data-feeds.md) | Display real-time information from external sources |
 
-### Hardware Integration
+---
 
-| Article | Description |
-|---------|-------------|
-| Using GPIO for Interactivity | Respond to button presses and sensor inputs |
-| Serial Communication | Interface with external devices via RS-232 |
-| USB Device Integration | Work with USB peripherals and storage |
-| Touch Screen Configuration | Enable and configure touch input |
+## Hardware Integration
 
-### Advanced Topics
+Interface with external devices, sensors, and touchscreens to create interactive experiences.
 
 | Article | Description |
 |---------|-------------|
-| Building Custom Extensions | Create compiled-language extensions |
-| Debugging Production Issues | Diagnose problems on deployed players |
-| Performance Optimization | Improve playback performance and memory usage |
-| Secure Deployment Practices | Implement security best practices |
+| [Using GPIO for Interactivity](12-using-gpio-for-interactivity.md) | Respond to button presses and sensor inputs |
+| [Serial Communication](13-serial-communication.md) | Interface with external devices via RS-232 |
+| [USB Device Integration](14-usb-device-integration.md) | Work with USB peripherals and storage |
+| [Touch Screen Configuration](15-touch-screen-configuration.md) | Enable and configure touch input |
+
+---
+
+## Advanced Topics
+
+Master advanced development techniques for production deployments and custom extensions.
+
+| Article | Description |
+|---------|-------------|
+| [Building Custom Extensions](16-building-custom-extensions.md) | Create compiled-language extensions |
+| [Debugging Production Issues](17-debugging-production-issues.md) | Diagnose problems on deployed players |
+| [Performance Optimization](18-performance-optimization.md) | Improve playback performance and memory usage |
+| [Secure Deployment Practices](19-secure-deployment-practices.md) | Implement security best practices |
 
 ---
 

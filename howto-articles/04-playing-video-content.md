@@ -846,11 +846,11 @@ End Function
 
 ## Next Steps
 
-- [Creating an Image Slideshow](06-creating-image-slideshow.md) - Display rotating images
-- [Audio Playback and Control](07-audio-playback-control.md) - Background music and audio
-- [Multi-Zone Layouts](08-multi-zone-layouts.md) - Complex screen layouts
+- [Creating an Image Slideshow](05-creating-image-slideshow.md) - Display rotating images
+- [Audio Playback and Control](06-audio-playback-control.md) - Background music and audio
+- [Multi-Zone Layouts](07-multi-zone-layouts.md) - Complex screen layouts
 - [roVideoPlayer Reference](https://docs.brightsign.biz/developers/rovideoplayer) - Complete API documentation
 
 ---
 
-[← Back to How-To Articles](README.md) | [Next: Creating an Image Slideshow →](06-creating-image-slideshow.md)
+[← Back to How-To Articles](README.md) | [Next: Creating an Image Slideshow →](05-creating-image-slideshow.md)

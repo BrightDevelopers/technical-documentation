@@ -858,10 +858,10 @@ End Function
 
 ## Next Steps
 
-- [Audio Playback and Control](07-audio-playback-control.md) - Add background music
-- [Multi-Zone Layouts](08-multi-zone-layouts.md) - Combine images with other content
+- [Audio Playback and Control](06-audio-playback-control.md) - Add background music
+- [Multi-Zone Layouts](07-multi-zone-layouts.md) - Combine images with other content
 - [roImagePlayer Reference](https://docs.brightsign.biz/developers/roimageplayer) - Complete API documentation
 
 ---
 
-[← Previous: Playing Video Content](05-playing-video-content.md) | [Next: Audio Playback and Control →](07-audio-playback-control.md)
+[← Previous: Playing Video Content](04-playing-video-content.md) | [Next: Audio Playback and Control →](06-audio-playback-control.md)
