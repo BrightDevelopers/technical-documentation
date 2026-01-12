@@ -26,7 +26,7 @@
 | [BrightSign Documentation](https://docs.brightsign.biz/) | Official technical documentation |
 | [BrightSign GitHub](https://github.com/brightsign) | Open source tools and SDKs |
 | [BSN.cloud API Reference](https://docs.bsn.cloud/) | Cloud platform API documentation |
-| [BrightSign Community](https://community.brightsign.biz/) | Forums and developer community |
+| [BrightSign Community](https://github.com/orgs/BrightDevelopers/discussions) | Forums and developer community |
 
 ---
 

@@ -54,7 +54,7 @@ Code examples should:
 ## Questions?
 
 - **Documentation Issues**: Open a GitHub issue
-- **Technical Questions**: Visit the [BrightSign Community](https://community.brightsign.biz/)
+- **Technical Questions**: Visit the [BrightSign Community](https://github.com/orgs/BrightDevelopers/discussions)
 - **Official Support**: [brightsign.biz/support](https://www.brightsign.biz/support/)
 
 ---
