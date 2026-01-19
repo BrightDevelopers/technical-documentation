@@ -10,6 +10,19 @@
 
 ---
 
+## MCP Server for AI Assistants
+
+Connect your AI coding assistant directly to BrightSign documentation. The **BrightDeveloper MCP Server** gives Claude Code, GitHub Copilot, and other MCP-compatible tools instant access to our complete technical docs.
+
+```bash
+# Claude Code quick setup
+claude mcp add brightdeveloper --transport http https://brightdeveloper-mcp.bsn.cloud/mcp
+```
+
+[**MCP Server Setup Guide →**](https://github.com/BrightDevelopers/.github/blob/main/profile/MCP-SERVER-HOWTO.md)
+
+---
+
 ## What is BrightDeveloper?
 
 **BrightDeveloper** is BrightSign's developer program—clear documentation, working code, and starter projects ready to customize. Whether you're building a CMS, a kiosk application, or an AI-powered analytics solution, we want you to go from idea to production as fast as possible.
