@@ -31,7 +31,7 @@ Our goal: **your first successful API call in under 15 minutes**, and a clear pa
 
 This repo contains technical documentation and guides. If you're building a cloud integration, start with the **[gopurple SDK](https://github.com/BrightDevelopers/gopurple)**—it's the fastest way to get working code.
 
-This program is for software developers building on BrightSign. If you just need to create presentations and manage players without writing code, check out [BrightAuthor:connected](https://www.brightsign.biz/brightauthor-connected/) and [BSN.cloud](https://www.brightsign.biz/bsn-cloud/).
+This program is for software developers building on BrightSign. If you just need to create presentations and manage players without writing code, check out [BrightAuthor:connected](https://www.brightsign.biz/resources/software-downloads/) and [BSN.cloud](https://www.bsn.cloud/#/dashboard).
 
 ---
 
