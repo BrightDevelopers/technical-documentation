@@ -19,7 +19,7 @@ Connect your AI coding assistant directly to BrightSign documentation. The **Bri
 claude mcp add brightdeveloper --transport http https://brightdeveloper-mcp.bsn.cloud/mcp
 ```
 
-[**MCP Server Setup Guide →**](https://github.com/BrightDevelopers/.github/blob/main/profile/MCP-SERVER-HOWTO.md)
+[**MCP Server Setup Guide →**](MCP-SERVER-HOWTO.md)
 
 ---
 
