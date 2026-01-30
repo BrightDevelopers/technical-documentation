@@ -170,15 +170,19 @@ Use any language with HTTP support:
 
 ```python
 import requests
+import base64
 
-# Authenticate
+# Authenticate using Basic auth with client credentials
+client_id = 'your_client_id'
+client_secret = 'your_secret'
+credentials = base64.b64encode(f'{client_id}:{client_secret}'.encode()).decode()
+
 auth_response = requests.post(
-    'https://auth.bsn.cloud/api/v1/oauth2/token',
-    data={
-        'grant_type': 'client_credentials',
-        'client_id': 'your_client_id',
-        'client_secret': 'your_secret',
-        'scope': 'bsn.api.main.*'
+    'https://auth.bsn.cloud/realms/bsncloud/protocol/openid-connect/token',
+    data={'grant_type': 'client_credentials'},
+    headers={
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': f'Basic {credentials}'
     }
 )
 token = auth_response.json()['access_token']

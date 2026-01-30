@@ -621,35 +621,36 @@ BSN.cloud provides comprehensive REST APIs:
 
 ### Authentication
 
-BSN.cloud uses OAuth2 for authentication:
+BSN.cloud uses OAuth2 client credentials flow for authentication. Credentials are passed via HTTP Basic authentication:
 
 ```javascript
 // Obtain access token
 async function getAccessToken(clientId, clientSecret) {
-  const response = await fetch('https://auth.bsn.cloud/api/v1/oauth2/token', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: new URLSearchParams({
-      grant_type: 'client_credentials',
-      client_id: clientId,
-      client_secret: clientSecret,
-      scope: 'bsn.api.main.*'  // Request appropriate scopes
-    })
-  });
+  // Encode credentials as Base64 for Basic auth
+  const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
+
+  const response = await fetch(
+    'https://auth.bsn.cloud/realms/bsncloud/protocol/openid-connect/token',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': `Basic ${credentials}`,
+        'Accept': 'application/json'
+      },
+      body: new URLSearchParams({
+        grant_type: 'client_credentials'
+      })
+    }
+  );
 
   const data = await response.json();
-  // Returns: { access_token, token_type: 'Bearer', expires_in, scope }
+  // Returns: { access_token, token_type: 'Bearer', expires_in, ... }
   return data.access_token;
 }
 ```
 
-**Token Scopes**:
-- `bsn.api.main.devices.*`: Device management
-- `bsn.api.main.content.*`: Content operations
-- `bsn.api.main.presentations.*`: Presentation management
-- `bsn.api.main.operations.*`: Business operations
+**Important**: The client ID and secret must be sent via HTTP Basic authentication header, not in the request body.
 
 ### Device Control
 
