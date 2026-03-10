@@ -611,37 +611,189 @@ while true
 end while
 ```
 
-### File System Access
+### Network Configuration
 
-```javascript
-const FileSystem = require('@brightsign/filesystem');
-const fs = new FileSystem();
+The `@brightsign/networkconfiguration` API provides comprehensive control over network interfaces.
 
-// Read file
-fs.readFile('/storage/sd/config.json')
-    .then(content => {
-        const config = JSON.parse(content);
-        console.log('Config loaded:', config);
-    })
-    .catch(err => console.error('Read error:', err));
-
-// Write file
-const data = JSON.stringify({ lastRun: Date.now() });
-fs.writeFile('/storage/sd/state.json', data)
-    .then(() => console.log('State saved'))
-    .catch(err => console.error('Write error:', err));
-```
-
-### Network Status
+#### Getting Network Configuration
 
 ```javascript
 const NetworkConfig = require('@brightsign/networkconfiguration');
-const network = new NetworkConfig(0); // 0 = ethernet, 1 = wifi
 
-network.getConfig().then(config => {
-    console.log('IP Address:', config.ip4_address);
-    console.log('Gateway:', config.ip4_gateway);
-    console.log('DNS:', config.dns_servers);
+// Ethernet interface
+const ethernet = new NetworkConfig('eth0');
+
+ethernet.getConfig().then(config => {
+    console.log('Interface enabled:', config.enable);
+    console.log('Metric:', config.metric);
+    console.log('DNS Servers:', config.dnsServerList);
+    console.log('MTU:', config.mtu);
+    console.log('Client Identifier:', config.clientIdentifier);
+    
+    // Check IP address configuration
+    if (config.ipAddressList && config.ipAddressList.length > 0) {
+        const ip = config.ipAddressList[0];
+        console.log('IP Address:', ip.address);
+        console.log('Netmask:', ip.netmask);
+        console.log('Gateway:', ip.gateway);
+        console.log('Broadcast:', ip.broadcast);
+    } else {
+        console.log('Using DHCP');
+    }
+}).catch(err => console.error('Config error:', err));
+```
+
+#### Setting Static IP Address
+
+```javascript
+const NetworkConfig = require('@brightsign/networkconfiguration');
+const network = new NetworkConfig('eth0');
+
+// First get current config, then modify
+network.getConfig()
+    .then(config => {
+        // Set static IP
+        config.ipAddressList = [{
+            family: 'IPv4',
+            address: '192.168.1.100',
+            netmask: '255.255.255.0',
+            gateway: '192.168.1.1',
+            broadcast: '192.168.1.255'
+        }];
+        
+        // Set DNS servers
+        config.dnsServerList = ['8.8.8.8', '8.8.4.4'];
+        
+        return network.applyConfig(config);
+    })
+    .then(() => console.log('Network configured successfully'))
+    .catch(err => console.error('Configuration failed:', err));
+```
+
+#### Switching to DHCP
+
+```javascript
+// To use DHCP, set ipAddressList to empty array
+network.getConfig()
+    .then(config => {
+        config.ipAddressList = []; // Empty = DHCP
+        return network.applyConfig(config);
+    })
+    .then(() => console.log('Switched to DHCP'))
+    .catch(err => console.error('DHCP config failed:', err));
+```
+
+#### WiFi Configuration
+
+```javascript
+const wifi = new NetworkConfig('wlan0');
+
+// Scan for WiFi networks
+wifi.scan()
+    .then(networks => {
+        console.log('Available networks:');
+        networks.forEach(net => {
+            console.log(`  ${net.essId} - Signal: ${net.signal} - BSSID: ${net.bssId}`);
+        });
+    })
+    .catch(err => console.error('Scan failed:', err));
+
+// Connect to WiFi network
+wifi.getConfig()
+    .then(config => {
+        config.essId = 'MyNetwork';
+        config.passphrase = 'MyPassword123';
+        config.securityMode = 'ccmp'; // WPA2
+        return wifi.applyConfig(config);
+    })
+    .then(() => console.log('WiFi configured'))
+    .catch(err => console.error('WiFi config failed:', err));
+
+// Reconnect to current WiFi network
+wifi.reassociate()
+    .then(() => console.log('WiFi reconnected'))
+    .catch(err => console.error('Reconnection failed:', err));
+```
+
+#### LLDP Information (Ethernet Only)
+
+```javascript
+// Get LLDP neighbor information (network infrastructure details)
+ethernet.getNeighborInformation()
+    .then(info => {
+        if (info) {
+            console.log('LLDP Information:', info);
+        } else {
+            console.log('No LLDP information available');
+        }
+    })
+    .catch(err => console.error('LLDP error:', err));
+```
+
+#### Complete Network Dashboard Example
+
+```javascript
+const NetworkConfig = require('@brightsign/networkconfiguration');
+
+async function getNetworkStatus() {
+    const interfaces = ['eth0', 'wlan0'];
+    const status = {};
+    
+    for (const iface of interfaces) {
+        try {
+            const network = new NetworkConfig(iface);
+            const config = await network.getConfig();
+            
+            status[iface] = {
+                enabled: config.enable,
+                metric: config.metric,
+                dns: config.dnsServerList,
+                mtu: config.mtu
+            };
+            
+            // Get IP info
+            if (config.ipAddressList && config.ipAddressList.length > 0) {
+                const ip = config.ipAddressList[0];
+                status[iface].ip = ip.address;
+                status[iface].gateway = ip.gateway;
+                status[iface].type = 'Static';
+            } else {
+                status[iface].type = 'DHCP';
+            }
+            
+            // Get actual runtime IP from OS module
+            const os = require('os');
+            const netInterfaces = os.networkInterfaces();
+            if (netInterfaces[iface]) {
+                const ipv4 = netInterfaces[iface].find(i => i.family === 'IPv4');
+                if (ipv4) {
+                    status[iface].currentIP = ipv4.address;
+                }
+            }
+            
+        } catch (err) {
+            console.log(`${iface} not available:`, err.message);
+        }
+    }
+    
+    return status;
+}
+
+// Display network status
+getNetworkStatus().then(status => {
+    console.log('Network Status:', JSON.stringify(status, null, 2));
+    
+    // Update UI with network information
+    document.getElementById('network-info').innerHTML = 
+        Object.entries(status).map(([iface, info]) => `
+            <div class="interface">
+                <h3>${iface}</h3>
+                <p>Type: ${info.type}</p>
+                <p>IP: ${info.currentIP || info.ip || 'Not assigned'}</p>
+                <p>Gateway: ${info.gateway || 'N/A'}</p>
+                <p>DNS: ${info.dns?.join(', ') || 'N/A'}</p>
+            </div>
+        `).join('');
 });
 ```
 
