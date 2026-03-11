@@ -16,6 +16,7 @@ BrightSign players use Chromium as their HTML rendering engine. The version vari
 
 | Rendering Engine | Version | BrightSign FW Versions |
 |------------------|---------|------------------------|
+| Chromium         | 120     | 9.1.x          |
 | Chromium         | 87      | 8.5.x, 9.0.x          |
 | Chromium         | 69      | 8.4.x, 8.3.x, 8.2.x, 8.1.x |
 | Chromium         | 65      | 8.0.x                 |

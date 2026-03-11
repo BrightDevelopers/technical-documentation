@@ -59,7 +59,7 @@ Sub Main()
 End Sub
 ```
 
-> **See also:** [01-hello-world.brs](examples/01-hello-world.brs) for the complete working example.
+> **See also:** [01-hello-world.brs](examples/foundations/01-hello-world.brs) for the complete working example.
 
 ---
 
@@ -69,7 +69,7 @@ End Sub
 
 This example shows the basic program structure with a main entry point and a supporting function, demonstrating how BrightScript applications are organized:
 
-> **See also:** [01-hello-world.brs](examples/01-hello-world.brs) and [07-basic-program-structure.brs](examples/07-basic-program-structure.brs) for complete working examples.
+> **See also:** [01-hello-world.brs](examples/foundations/01-hello-world.brs) and [07-basic-program-structure.brs](examples/foundations/07-basic-program-structure.brs) for complete working examples.
 
 ```brightscript
 Sub Main()
@@ -120,7 +120,7 @@ void, while
 
 **BrightScript is case-insensitive for keywords and identifiers**, but **case-sensitive for string comparisons**. This example demonstrates the difference between keyword/variable case insensitivity and string content case sensitivity:
 
-> **See also:** [05-case-sensitivity.brs](examples/05-case-sensitivity.brs) for a complete working example.
+> **See also:** [05-case-sensitivity.brs](examples/foundations/05-case-sensitivity.brs) for a complete working example.
 
 ```brightscript
 ' These are all equivalent - keywords are case insensitive
@@ -219,7 +219,7 @@ value# = 1.234567890   ' Double (# suffix)
 
 This comprehensive example showcases production-tested variable patterns, including type suffixes, device information retrieval, boolean configuration, and critical object validation that prevents device crashes:
 
-> **See also:** [02-variable-examples.brs](examples/02-variable-examples.brs) for a complete working example.
+> **See also:** [02-variable-examples.brs](examples/foundations/02-variable-examples.brs) for a complete working example.
 
 ```brightscript
 Sub VariableExamples()
@@ -416,7 +416,7 @@ end while
 
 This example demonstrates the GOTO statement for loop control, showing label definition syntax and conditional branching that mimics traditional BASIC programming patterns (though modern BrightScript development typically favors structured loops):
 
-> **See also:** [06-goto-labels.brs](examples/06-goto-labels.brs) for a complete working example.
+> **See also:** [06-goto-labels.brs](examples/foundations/06-goto-labels.brs) for a complete working example.
 
 ```brightscript
 Sub ProcessWithGoto()
@@ -442,7 +442,7 @@ End Sub
 
 These production function examples demonstrate real-world BrightScript function patterns: WiFi capability detection using network configuration objects, data conversion utilities for boolean and string handling, device validation using storage objects, and proper resource cleanup with invalid assignment:
 
-> **See also:** [03-function-examples.brs](examples/03-function-examples.brs) for a complete working example.
+> **See also:** [03-function-examples.brs](examples/foundations/03-function-examples.brs) for a complete working example.
 
 ```brightscript
 ' Production naming pattern: Pascal case with descriptive names
@@ -516,7 +516,7 @@ print math.multiply(5, 3)  ' Output: 15
 
 Real production code uses factory functions with specific naming conventions:
 
-> **See also:** [09-object-factory-pattern.brs](examples/09-object-factory-pattern.brs) and [11-networking-object-factory.brs](examples/11-networking-object-factory.brs) for complete working examples.
+> **See also:** [09-object-factory-pattern.brs](examples/objects/09-object-factory-pattern.brs) and [11-networking-object-factory.brs](examples/objects/11-networking-object-factory.brs) for complete working examples.
 
 ```brightscript
 ' Production pattern: "new" prefix for factory functions
@@ -589,7 +589,7 @@ End Sub
 
 **The `m` variable is BrightScript's "self" reference** - it provides access to the current object's properties and methods. In production code, `m` is extensively used for object state management, cross-referencing between objects, and method implementations.
 
-> **See also:** [08-m-scope-device-manager.brs](examples/08-m-scope-device-manager.brs) and [10-application-manager-cross-references.brs](examples/10-application-manager-cross-references.brs) for complete working examples.
+> **See also:** [08-m-scope-device-manager.brs](examples/objects/08-m-scope-device-manager.brs) and [10-application-manager-cross-references.brs](examples/objects/10-application-manager-cross-references.brs) for complete working examples.
 
 #### Basic "m" Usage - Object Self-Reference
 
@@ -970,7 +970,7 @@ end if
 
 ### Arrays (roArray)
 
-> **See also:** [12-queue-pattern.brs](examples/12-queue-pattern.brs) for a complete working example using arrays.
+> **See also:** [12-queue-pattern.brs](examples/data-structures/12-queue-pattern.brs) for a complete working example using arrays.
 
 These examples demonstrate BrightScript array fundamentals: creating arrays with literal syntax and CreateObject methods, essential array operations including push/pop/shift/unshift for queue and stack operations, array manipulation methods like sorting and reversing, multi-dimensional array handling with DIM, and practical iteration patterns for data processing:
 
@@ -1052,7 +1052,7 @@ Library "filename.brs"
 
 ### Example Usage
 
-> **See also:** [22-production-library-pattern.brs](examples/22-production-library-pattern.brs) for a complete working example.
+> **See also:** [22-production-library-pattern.brs](examples/production/22-production-library-pattern.brs) for a complete working example.
 
 This demonstrates proper library inclusion patterns:
 
@@ -1162,7 +1162,7 @@ num! = str$.ToFloat()     ' 123.0
 
 These practical functions showcase real-world string processing techniques: phone number formatting with digit extraction and pattern application for user interface display, and query string parsing using tokenization to convert URL parameters into associative arrays for web application development:
 
-> **See also:** [04-string-functions.brs](examples/04-string-functions.brs) for a complete working example.
+> **See also:** [04-string-functions.brs](examples/foundations/04-string-functions.brs) for a complete working example.
 
 ```brightscript
 Function FormatPhoneNumber(phone As String) As String
@@ -1429,7 +1429,7 @@ End Sub
 
 These network configuration examples demonstrate essential network management: basic interface configuration with DHCP and static IP setup, DNS server configuration with multiple server support, network configuration application for immediate effect, and network status retrieval for monitoring and diagnostics:
 
-> **See also:** [18-network-configuration.brs](examples/18-network-configuration.brs) for a complete working example.
+> **See also:** [18-network-configuration.brs](examples/system/18-network-configuration.brs) for a complete working example.
 
 ```brightscript
 ' Configure network interface
@@ -1466,6 +1466,8 @@ Function GetNetworkStatus() As Object
 End Function
 ```
 
+> **DHCP server capability:** `roNetworkConfiguration` configures the player as a **DHCP client** only — it can request an IP address from an upstream server, but it has no API for acting as a DHCP server (assigning addresses to other devices). There is no `roDHCPServer` or equivalent native object in BrightScript. If your architecture requires the player to serve IP addresses on an isolated network, use a Node.js DHCP server implementation (see [JavaScript Node Programs](../part-3-javascript-development/02-javascript-node-programs.md)).
+
 ---
 
 ## Media Playback
@@ -1474,7 +1476,7 @@ End Function
 
 These video playback examples demonstrate multimedia control: basic video player setup with message port binding for event handling, video mode configuration for display resolution, file playback with success validation, comprehensive event loop handling for media state tracking, and advanced playlist management with seek controls and volume adjustment:
 
-> **See also:** [14-video-player.brs](examples/14-video-player.brs) and [17-complete-media-player.brs](examples/17-complete-media-player.brs) for complete working examples.
+> **See also:** [14-video-player.brs](examples/media/14-video-player.brs) and [17-complete-media-player.brs](examples/media/17-complete-media-player.brs) for complete working examples.
 
 ```brightscript
 Sub PlayVideo(filename As String, msgPort As Object)
@@ -1539,7 +1541,7 @@ End Sub
 
 These audio playback examples show multimedia audio control: basic audio player setup with message port configuration, audio output configuration for HDMI routing with volume control, event handling for audio completion detection, and multi-track playlist management with roAudioPlayerMx including loop mode configuration:
 
-> **See also:** [15-audio-player.brs](examples/15-audio-player.brs) and [17-complete-media-player.brs](examples/17-complete-media-player.brs) for complete working examples.
+> **See also:** [15-audio-player.brs](examples/media/15-audio-player.brs) and [17-complete-media-player.brs](examples/media/17-complete-media-player.brs) for complete working examples.
 
 ```brightscript
 Sub PlayAudio(filename As String, msgPort As Object)
@@ -1589,7 +1591,7 @@ End Sub
 
 These image display examples demonstrate visual content management: single image display with roImagePlayer using file validation and timing control, and automated slideshow functionality with duration-based timing for cycling through image collections:
 
-> **See also:** [16-image-slideshow.brs](examples/16-image-slideshow.brs) and [17-complete-media-player.brs](examples/17-complete-media-player.brs) for complete working examples.
+> **See also:** [16-image-slideshow.brs](examples/media/16-image-slideshow.brs) and [17-complete-media-player.brs](examples/media/17-complete-media-player.brs) for complete working examples.
 
 ```brightscript
 Sub DisplayImage(filename As String)
@@ -1625,7 +1627,7 @@ End Sub
 
 **Message ports (`roMessagePort`) are the cornerstone of BrightScript's event-driven architecture.** Think of a message port as a centralized event bus where multiple objects can send events, and your application listens for and processes these events in a single location. This design eliminates the need for polling and creates responsive, efficient applications.
 
-> **See also:** [21-production-event-loop.brs](examples/21-production-event-loop.brs) and [24-complete-event-bus.brs](examples/24-complete-event-bus.brs) for complete working examples.
+> **See also:** [21-production-event-loop.brs](examples/production/21-production-event-loop.brs) and [24-complete-event-bus.brs](examples/production/24-complete-event-bus.brs) for complete working examples.
 
 ### Understanding the Message Port Concept
 
@@ -2199,7 +2201,7 @@ end while
 
 These XML processing examples demonstrate structured data handling: basic XML parsing with roXMLElement for document processing, element access using dot notation for hierarchical navigation, attribute retrieval with @ syntax, iteration through XML node lists, and advanced document navigation with path-based element selection:
 
-> **See also:** [27-xml-processing.brs](examples/27-xml-processing.brs) for a complete working example.
+> **See also:** [27-xml-processing.brs](examples/production/27-xml-processing.brs) for a complete working example.
 
 ```brightscript
 Sub ParseXmlExample()
@@ -2477,7 +2479,7 @@ End Function
 
 These production error handling patterns demonstrate critical robustness techniques: mandatory object creation validation with immediate program termination on failure, network configuration validation with early return patterns, device info validation for system stability, file operation validation for data integrity, and timer creation validation with comprehensive error checking:
 
-> **See also:** [23-production-validation-pattern.brs](examples/23-production-validation-pattern.brs) for a complete working example.
+> **See also:** [23-production-validation-pattern.brs](examples/production/23-production-validation-pattern.brs) for a complete working example.
 
 ```brightscript
 ' Production pattern: Object creation with immediate validation and stop
@@ -2611,7 +2613,7 @@ End Function
 
 This state machine example demonstrates structured state management: object-based state machine creation with centralized state tracking, state transition logging for debugging, and event-driven state changes with conditional logic for different system states:
 
-> **See also:** [13-state-machine.brs](examples/13-state-machine.brs) for a complete working example.
+> **See also:** [13-state-machine.brs](examples/data-structures/13-state-machine.brs) for a complete working example.
 
 ```brightscript
 Function CreateStateMachine() As Object
@@ -2652,7 +2654,7 @@ End Function
 
 This queue implementation demonstrates essential data structure patterns: FIFO queue creation with array-based storage, enqueue/dequeue operations for adding and removing elements, queue state checking with peek and isEmpty methods, and size tracking for capacity management:
 
-> **See also:** [12-queue-pattern.brs](examples/12-queue-pattern.brs) for a complete working example.
+> **See also:** [12-queue-pattern.brs](examples/data-structures/12-queue-pattern.brs) for a complete working example.
 
 ```brightscript
 Function CreateQueue() As Object
@@ -2694,7 +2696,7 @@ End Function
 
 This comprehensive registry management example demonstrates production-ready persistent storage patterns: safe registry section creation with validation and error handling, settings manager object with built-in validation methods, proper read/write/delete operations with flushing, and real-world production usage with multiple registry sections for different configuration categories:
 
-> **See also:** [19-registry-settings.brs](examples/19-registry-settings.brs) and [20-registry-manager-validation.brs](examples/20-registry-manager-validation.brs) for complete working examples.
+> **See also:** [19-registry-settings.brs](examples/system/19-registry-settings.brs) and [20-registry-manager-validation.brs](examples/system/20-registry-manager-validation.brs) for complete working examples.
 
 ```brightscript
 ' Production pattern: Safe registry section creation
@@ -2797,7 +2799,7 @@ end function
 
 These comprehensive timer management examples demonstrate production-tested timing patterns: centralized timer manager with identity tracking, critical timer identity verification using string conversion, multi-timer event handling with proper cleanup, real-world timer usage patterns from production BrightSign applications, and specialized daily timer configuration for scheduled operations:
 
-> **See also:** [25-timer-manager.brs](examples/25-timer-manager.brs) for a complete working example.
+> **See also:** [25-timer-manager.brs](examples/production/25-timer-manager.brs) for a complete working example.
 
 ```brightscript
 ' Production pattern: Safe timer management with identity verification
@@ -2997,7 +2999,7 @@ End Sub
 
 This comprehensive logging system demonstrates production-ready diagnostic capabilities: hierarchical log level management with DEBUG/INFO/WARN/ERROR priorities, timestamp-based log entry formatting for audit trails, dual output to console and file for comprehensive logging, method-specific logging functions for convenience, and practical usage patterns for error handling and application monitoring:
 
-> **See also:** [26-debug-logging-system.brs](examples/26-debug-logging-system.brs) for a complete working example.
+> **See also:** [26-debug-logging-system.brs](examples/production/26-debug-logging-system.brs) for a complete working example.
 
 ```brightscript
 ' Create logging system
