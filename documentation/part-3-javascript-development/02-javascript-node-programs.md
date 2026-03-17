@@ -404,6 +404,12 @@ server.on("listening", () => {
 server.bind(41234);
 ```
 
+### DHCP Server
+
+**BrightScript has no native DHCP server.** `roNetworkConfiguration` manages the player as a *DHCP client* only — there is no `roDHCPServer` object. When the player must assign IP addresses to other devices (isolated kiosk network, offline deployment, access-point companion), the Node.js path using the built-in `dgram` module is the documented approach.
+
+See the [DHCP Server How-To](../../howto-articles/20-dhcp-server-node.md) for a complete walkthrough.
+
 ## System Integration
 
 ### OS Interaction

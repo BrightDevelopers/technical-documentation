@@ -79,6 +79,7 @@ Master advanced development techniques for production deployments and custom ext
 | [Debugging Production Issues](17-debugging-production-issues.md) | Diagnose problems on deployed players |
 | [Performance Optimization](18-performance-optimization.md) | Improve playback performance and memory usage |
 | [Secure Deployment Practices](19-secure-deployment-practices.md) | Implement security best practices |
+| [Running a DHCP Server (Node.js)](20-dhcp-server-node.md) | Serve IP addresses from the player on isolated/offline networks |
 
 ---
 
