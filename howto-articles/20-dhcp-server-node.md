@@ -49,7 +49,8 @@ Sub Main()
     nc.SetIP4Address("192.168.100.1")
     nc.SetIP4Netmask("255.255.255.0")
     nc.SetIP4Gateway("192.168.100.1")  ' Player is its own gateway on isolated net
-    nc.SetDNSServers(["8.8.8.8"])
+    nc.SetDNSServers(["8.8.8.8", "8.8.4.4"])
+    nc.SetTimeServer("http://time.brightsignnetwork.com/")
 
     nc.Apply()
 
@@ -304,6 +305,14 @@ Add the following to your `autorun.brs` to start the DHCP server process when th
 ' autorun.brs — Launch DHCP server alongside your main application
 Sub Main()
     msgPort = CreateObject("roMessagePort")
+
+    ' Enable Local DWS (if not already enabled)
+    regNetworking = CreateObject("roRegistrySection", "networking")
+    if regNetworking.Read("http_server") <> "80" then
+        regNetworking.Write("http_server", "80")
+        RebootSystem()
+    end if
+
     dhcpNode = CreateObject("roNodeJs", "SD:/dhcp-server.js", { message_port: msgPort })
     if dhcpNode = invalid then
         print "ERROR: Could not launch DHCP server (Node.js unavailable?)"
@@ -316,7 +325,7 @@ Sub Main()
     while true
         msg = Wait(0, msgPort)
         if type(msg) = "roNodeJsEvent" then
-            print "Event: "; msg
+            print "Event: "; msg.GetData()
         end if
         ' Add your other application logic here
     end while
