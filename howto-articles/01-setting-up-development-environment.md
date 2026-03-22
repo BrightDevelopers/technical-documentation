@@ -494,7 +494,176 @@ script                      # Return to BrightScript debugger
 
 **Exception - "Insecured" Mode:**
 
-Players can be put into "insecured" mode for native extension development. In this mode, `exit` from the shell does NOT reboot, allowing you to return to a login prompt. This is required when developing custom C/C++ extensions.
+Players can be put into "insecured" mode for native extension development. In this mode, `exit` from the shell does NOT reboot — instead it drops to a Linux shell prompt. See [Insecuring a Player for Extension Development](#insecuring-a-player-for-extension-development) below.
+
+---
+
+## Insecuring a Player for Extension Development
+
+"Insecuring" a player means permanently disabling secure boot so the player will load unsigned OS extensions (native C/C++ `.so` libraries). This is required for developing and testing custom extensions — there is no other way to run unsigned code at the OS level.
+
+**When you need this:**
+- Building custom native extensions (C/C++ code that runs as part of the OS)
+- Accessing the Linux kernel shell directly over SSH
+- Deep system-level debugging that the BrightScript shell cannot reach
+
+**When you do NOT need this:**
+- BrightScript development
+- HTML5/JavaScript/Node.js development
+- Standard DWS, SSH, or serial console access
+
+### Critical Caveats
+
+> **This action is irreversible under all circumstances.** Once secure boot is disabled, it cannot be re-enabled — not by factory reset, not by OS update, not by any means. The player will permanently operate in an insecure state.
+
+> **This voids the player's warranty.** Use a dedicated development unit, not a production device.
+
+> **SSH disables serial console access.** When SSH is enabled, the serial port no longer provides an interactive console. All future console access must happen over SSH.
+
+> **Developer settings (console, script debug) reset on OS update or factory reset.** The insecure state persists, but you will need to re-enable console and script debug after any OS update.
+
+> **The SVC button only works without an SD card.** With an SD card inserted, SVC will not drop into the debugger or shell unless `autorun.brs` contains only `end`.
+
+### Step 1: Enable the BrightSign Console
+
+The console must be enabled before secure boot can be disabled. It enables shell, debugger, and log access over the serial port.
+
+1. Connect your serial cable and open a terminal session (115200 baud, 8N1).
+2. **Remove any SD card from the player.**
+3. Power the player off.
+4. **Hold the SVC button** while applying power. Within 2–5 seconds you will see:
+   ```
+   Hit key to stop autoboot (CTRL+C): 3
+   ```
+5. **Press Ctrl-C** within the countdown. You will land at a bootloader prompt — one of:
+   ```
+   bolt>
+   secure>
+   insecure>
+   ```
+6. Enable the console persistently:
+   ```
+   console on
+   reboot
+   ```
+
+> Holding SVC enables console for one boot only. `console on` + `reboot` makes it permanent until `console off` is run or a factory reset is performed.
+
+### Step 2: Disable Secure Boot
+
+1. With **no SD card inserted**, power cycle while holding SVC.
+2. Press **Ctrl-C** at the countdown.
+3. At the bootloader prompt, try the primary command (use whichever does not error):
+   ```
+   disable_secure_boot
+   ```
+   or
+   ```
+   set env insecure
+   ```
+4. Confirm the irreversible action when prompted.
+5. Reboot:
+   ```
+   reboot
+   ```
+
+**Fallback** — if the above commands error, use the environment variable approach:
+```
+setenv SECURE_CHECKS 0
+saveenv
+boot
+```
+
+### Step 3: Enable the BrightScript Debugger
+
+1. Allow the player to boot fully with **no SD card inserted**. Wait 30–60 seconds after the splash screen.
+2. Give a single firm press of the **SVC button** (do not hold). You should land at:
+   ```
+   BrightSign>
+   ```
+   If you land in a debugger prompt instead, type `exit` first.
+3. Enable script debug:
+   ```
+   script debug on
+   reboot
+   ```
+
+### Step 4: Verify Insecure Status
+
+1. With **no SD card inserted**, let the player boot fully (30–60 seconds after splash).
+2. Press **SVC** once.
+3. If you see a Linux shell prompt (`#` or `$`) after typing `exit` from the BrightSign prompt, the player is confirmed insecure. ✅
+4. If the player **reboots** instead, revisit Step 2 using the `setenv SECURE_CHECKS 0` fallback.
+
+### Development Mode autorun.brs
+
+Once insecured, use this `autorun.brs` to configure a player for development in a single boot. It enables all the tools you need — DWS (unauthenticated), SSH, BrightScript debug, curl debug, and Prometheus metrics — then displays a message prompting for a manual reboot to apply registry changes.
+
+```brightscript
+Sub Main()
+    ' Enable BrightScript debug mode
+    regB = CreateObject("roRegistrySection", "brightscript")
+    regB.Write("debug", "1")
+    regB.Flush()
+
+    reg = CreateObject("roRegistrySection", "networking")
+    reg.Write("bbhf", "on")
+    ' Enable Local DWS
+    reg.Write("dwse", "yes")
+    ' Enable curl verbose logging for HTTP debugging
+    reg.Write("curl_debug", "1")
+    ' Expose Prometheus node exporter for metrics scraping
+    reg.Write("prometheus-node-exporter-port", "9100")
+    ' Enable SSH on port 22
+    reg.Write("ssh", "22")
+    ' Maximum telnet log verbosity
+    reg.Write("telnet_log_level", "7")
+    reg.Flush()
+
+    ' Open DWS on port 80 with no authentication
+    CreateObject("roNetworkConfiguration", 0).SetupDWS({port: "80", open: "none"})
+
+    ' Set SSH/shell login password to empty
+    n = CreateObject("roNetworkConfiguration", 0)
+    n.SetLoginPassword("none")
+    n.Apply()
+
+    ShowMessage("Setup complete -- manually reboot the player to apply settings")
+
+    sleep(50000)
+End Sub
+
+Sub ShowMessage(msg)
+    gaa = GetGlobalAA()
+
+    videoMode = CreateObject("roVideoMode")
+    resX = videoMode.GetResX()
+    resY = videoMode.GetResY()
+    videoMode = invalid
+
+    r = CreateObject("roRectangle", 0, resY / 2 - resY / 64, resX, resY / 32)
+
+    twParams = CreateObject("roAssociativeArray")
+    twParams.LineCount = 1
+    twParams.TextMode = 2
+    twParams.Rotation = 0
+    twParams.Alignment = 1
+
+    gaa.tw = CreateObject("roTextWidget", r, 1, 2, twParams)
+    gaa.tw.PushString(msg)
+    gaa.tw.Show()
+
+    print msg
+End Sub
+```
+
+> **Security note:** This autorun sets DWS to unauthenticated and SSH to no password. Use only on isolated development networks — never on production or shared infrastructure.
+
+After running this autorun and manually rebooting, the player will have:
+- Local DWS accessible at `http://<player-ip>/` with no login
+- SSH accessible at port 22 with no password
+- BrightScript debug and verbose logging enabled
+- Prometheus metrics at port 9100
 
 ---
 
