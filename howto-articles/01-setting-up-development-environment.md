@@ -31,6 +31,42 @@ This guide walks you through configuring your workstation for BrightSign develop
 
 ---
 
+## Quick Start
+
+For most development work you only need to drop an `autorun.brs` on an SD card and insert it into the player. The script below enables the Local Diagnostic Web Server (DWS) and SSH in a single boot, giving you local control over the player from your workstation.
+
+1. Format an SD card as FAT32 and create a file called `autorun.brs` at the root with the following content:
+
+```brightscript
+' quickstart.brs - Enable DWS and SSH for development
+Sub Main()
+    reg = CreateObject("roRegistrySection", "networking")
+    reg.Write("dwse", "yes")
+    reg.Write("ssh", "22")
+    reg.Flush()
+
+    nc = CreateObject("roNetworkConfiguration", 0)
+    nc.SetupDWS({port: "80", password: "yourpassword"})
+    nc.SetLoginPassword("yourpassword")
+    nc.Apply()
+
+    print "DWS and SSH enabled. Rebooting..."
+    RebootSystem()
+End Sub
+```
+
+2. Insert the SD card into the player and apply power.
+3. After reboot, the player is ready:
+   - **Local DWS** — open `http://<player-ip>/` in a browser to browse files, view diagnostics, and control the player
+   - **SSH** — `ssh brightsign@<player-ip>` for remote shell access and file transfers
+   - **BSC CLI** — install `npm install -g @brightsign/bsc` and use `bsc` commands against the player
+
+That is sufficient for BrightScript, HTML5, and Node.js development.
+
+**If you need to develop native OS extensions** — compiled code that runs as part of the OS rather than inside BrightScript or Node.js — you must first insecure the player. See [Insecuring a Player for Extension Development](#insecuring-a-player-for-extension-development). **This is an irreversible, one-way operation. Never do it to a production player.**
+
+---
+
 ## Development Control Options
 
 BrightSign offers two approaches to device management and development. Choose based on your needs:
@@ -498,13 +534,13 @@ script                      # Return to BrightScript debugger
 
 **Exception - "Insecured" Mode:**
 
-Players can be put into "insecured" mode for native extension development. In this mode, `exit` from the shell does NOT reboot — instead it drops to a Linux shell prompt. See [Insecuring a Player for Extension Development](#insecuring-a-player-for-extension-development) below.
+Players can be put into "insecured" mode for native extension development. In this mode, `exit` from the shell does NOT reboot — instead it drops to a Linux shell prompt. See [Insecuring a Player for Extension Development](#insecuring-a-player-for-extension-development) below. **Insecuring is irreversible and must never be done to production players.**
 
 ---
 
 ## Insecuring a Player for Extension Development
 
-"Insecuring" a player means permanently disabling secure boot so the player will load unsigned OS extensions (native C/C++ `.so` libraries). This is required for developing and testing custom extensions — there is no other way to run unsigned code at the OS level.
+"Insecuring" a player permanently disables secure boot so the player will load unsigned OS extensions. **This is a one-way, irreversible operation — it cannot be undone by factory reset, OS update, or any other means. Only do this to a dedicated development unit. Never insecure a production player.**
 
 **When you need this:**
 - Building custom native extensions (compiled code that runs as part of the OS, outside of BrightScript or Node.js)
@@ -518,15 +554,15 @@ Players can be put into "insecured" mode for native extension development. In th
 
 ### Critical Caveats
 
-> **This action is irreversible under all circumstances.** Once secure boot is disabled, it cannot be re-enabled — not by factory reset, not by OS update, not by any means. The player will permanently operate in an insecure state.
+> ⚠️ **This action is irreversible under all circumstances.** Once secure boot is disabled, it cannot be re-enabled — not by factory reset, not by OS update, not by any means. The player will permanently operate in an insecure state. **Do not do this to any player intended for production use.**
 
-> **This voids the player's warranty.** Use a dedicated development unit, not a production device.
+> ⚠️ **This voids the player's warranty.** Use a dedicated development unit, never a production device.
 
-> **SSH disables serial console access.** When SSH is enabled, the serial port no longer provides an interactive console. All future console access must happen over SSH.
+> ⚠️ **SSH disables serial console access.** When SSH is enabled, the serial port no longer provides an interactive console. All future console access must happen over SSH.
 
-> **Developer settings (console, script debug) reset on OS update or factory reset.** The insecure state persists, but you will need to re-enable console and script debug after any OS update.
+> ⚠️ **Developer settings (console, script debug) reset on OS update or factory reset.** The insecure state persists, but you will need to re-enable console and script debug after any OS update.
 
-> **The SVC button only works without an SD card.** With an SD card inserted, SVC will not drop into the debugger or shell unless `autorun.brs` contains only `end`.
+> ⚠️ **The SVC button only works without an SD card.** With an SD card inserted, SVC will not drop into the debugger or shell unless `autorun.brs` contains only `end`.
 
 ### Step 1: Enable the BrightSign Console
 
@@ -675,7 +711,7 @@ Sub ShowMessage(msg)
 End Sub
 ```
 
-> **Security note:** This autorun sets DWS to unauthenticated and SSH to no password. Use only on isolated development networks — never on production or shared infrastructure.
+> ⚠️ **Development only.** This autorun sets DWS to unauthenticated and SSH to no password. It is intended exclusively for isolated development networks — never run it on production hardware or shared infrastructure. Remember: the insecure state of the player is permanent and cannot be reversed.
 
 After running this autorun and manually rebooting, the player will have:
 - Local DWS accessible at `http://<player-ip>/` with no login
