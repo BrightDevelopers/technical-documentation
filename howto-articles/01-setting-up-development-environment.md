@@ -507,7 +507,7 @@ Players can be put into "insecured" mode for native extension development. In th
 "Insecuring" a player means permanently disabling secure boot so the player will load unsigned OS extensions (native C/C++ `.so` libraries). This is required for developing and testing custom extensions — there is no other way to run unsigned code at the OS level.
 
 **When you need this:**
-- Building custom native extensions (C/C++ code that runs as part of the OS)
+- Building custom native extensions (compiled code that runs as part of the OS, outside of BrightScript or Node.js)
 - Accessing the Linux kernel shell directly over SSH
 - Deep system-level debugging that the BrightScript shell cannot reach
 
@@ -594,10 +594,24 @@ boot
 
 ### Step 4: Verify Insecure Status
 
-1. With **no SD card inserted**, let the player boot fully (30–60 seconds after splash).
-2. Press **SVC** once.
-3. If you see a Linux shell prompt (`#` or `$`) after typing `exit` from the BrightSign prompt, the player is confirmed insecure. ✅
-4. If the player **reboots** instead, revisit Step 2 using the `setenv SECURE_CHECKS 0` fallback.
+With the player booted and an SD card with an `autorun.brs` inserted, connect via serial or SSH and walk down through each shell layer by typing `exit` at each prompt:
+
+1. Connect to the player over serial or SSH. You will see BrightScript output in the console as your application runs.
+2. Press **Ctrl-C** to interrupt execution. You will be dropped into the BrightScript debugger:
+   ```
+   BrightScript Debugger>
+   ```
+3. Type `exit` to leave the debugger. You will be dropped into the BrightSign shell:
+   ```
+   BrightSign>
+   ```
+4. Type `exit` again. On a secure player this reboots the device. On an insecure player it drops you into the Linux root shell:
+   ```
+   #
+   ```
+   A root shell prompt confirms the player is insecure. ✅
+
+If the player reboots at step 4 instead of dropping to a root shell, revisit Step 2 using the `setenv SECURE_CHECKS 0` fallback.
 
 ### Development Mode autorun.brs
 
@@ -736,6 +750,44 @@ ssh brightsign@192.168.1.100
 - Ensure autorun.brs is in the root directory
 - Check for syntax errors: Connect via serial to see boot errors
 - Verify SD card: Try reformatting if issues persist
+
+### Insecuring a Player
+
+**No output in the terminal after holding SVC and applying power**
+- Verify the cable is properly connected at both ends
+- Confirm the correct TTY device is selected (`ls /dev/tty*`; unplug and re-run to identify which device disappears)
+- Confirm terminal settings match: 115200 baud, 8N1
+- Check for counterfeit or incompatible USB-to-serial chipsets
+
+**"Resource busy" error on macOS**
+```bash
+lsof | grep 'usbserial'
+sudo kill -9 <PID>
+```
+Then re-open your terminal session.
+
+**Ctrl-C window missed / cannot interrupt boot**
+- Power cycle and retry. The countdown is short — have your finger on Ctrl-C before applying power.
+
+**`exit` at the BrightSign prompt reboots the player instead of dropping to a Linux shell**
+- The player is not yet fully insecure. Revisit Step 2 of the insecuring process and use the `setenv SECURE_CHECKS 0` / `saveenv` / `boot` fallback method.
+
+**SVC button press does nothing**
+- Confirm no SD card is inserted
+- Confirm you are pressing SVC (not the adjacent Reset button)
+- Do not hold SVC longer than necessary — holding 15 or more seconds may trigger rescue mode, indicated by a continuously flashing ERR LED
+
+**Player enters rescue mode (ERR LED flashing continuously)**
+- The ERR LED will flash for approximately 15 minutes before the player reboots automatically. If an OS update is present on a storage device, it will be applied during this window.
+
+**Serial console output disappears after enabling SSH**
+- This is expected. SSH disables the interactive serial console. To re-enable serial output alongside SSH/telnet:
+  ```brightscript
+  reg = CreateObject("roRegistrySection", "networking")
+  reg.Write("serial_with_telnet", "1")
+  reg.Flush()
+  ```
+  Note: With this enabled, interaction with serial devices via `roSerialPort` will become unreliable.
 
 ---
 
