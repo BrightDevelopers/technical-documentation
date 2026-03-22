@@ -33,37 +33,79 @@ This guide walks you through configuring your workstation for BrightSign develop
 
 ## Quick Start
 
-For most development work you only need to drop an `autorun.brs` on an SD card and insert it into the player. The script below enables the Local Diagnostic Web Server (DWS) and SSH in a single boot, giving you local control over the player from your workstation.
+The easiest way to quickly set your player up for development is to put this `autorun.brs` on a blank SD card and boot your player. Once it runs and displays the prompt on screen, remove the card and manually reboot the player. It will enable the Local Diagnostic Web Server (DWS), SSH, BrightScript debug mode, and verbose logging, with no password required.
 
-1. Format an SD card as FAT32 and create a file called `autorun.brs` at the root with the following content:
+1. Format an SD card as FAT32 and create a file called `autorun.brs` at the root with exactly the following content:
 
 ```brightscript
-' quickstart.brs - Enable DWS and SSH for development
 Sub Main()
+
+    regB = CreateObject("roRegistrySection", "brightscript")
+    regB.Write("debug", "1")
+    regB.Flush()
+
     reg = CreateObject("roRegistrySection", "networking")
+    reg.Write("bbhf", "on")
     reg.Write("dwse", "yes")
-    reg.Write("ssh", "22")
+    reg.Write("curl_debug", "1")
+    reg.Write("prometheus-node-exporter-port", "9100")
+    reg.write("ssh", "22")
+    reg.write("telnet_log_level", "7")
     reg.Flush()
 
-    nc = CreateObject("roNetworkConfiguration", 0)
-    nc.SetupDWS({port: "80", password: "yourpassword"})
-    nc.SetLoginPassword("yourpassword")
-    nc.Apply()
+    CreateObject("roNetworkConfiguration", 0).SetupDWS({port:"80", open:"none"})
 
-    print "DWS and SSH enabled. Rebooting..."
-    RebootSystem()
+    n = CreateObject("roNetworkConfiguration", 0) ' ethernet interface
+    n.SetLoginPassword("none")
+    n.Apply()
+
+    ShowMessage("now manually reboot the player...")
+
+    'DeleteFile("autorun.brs")
+    sleep(50000)
+    'RebootSystem()
+
+End Sub
+
+
+Sub ShowMessage(msg)
+
+    gaa = GetGlobalAA()
+
+    videoMode = CreateObject("roVideoMode")
+    resX = videoMode.GetResX()
+    resY = videoMode.GetResY()
+    videoMode = invalid
+    r = CreateObject("roRectangle", 0, resY/2-resY/64, resX, resY/32)
+    twParams = CreateObject("roAssociativeArray")
+    twParams.LineCount = 1
+    twParams.TextMode = 2
+    twParams.Rotation = 0
+    twParams.Alignment = 1
+    gaa.tw = CreateObject("roTextWidget", r, 1, 2, twParams)
+
+    gaa.tw.PushString(msg)
+    gaa.tw.Show()
+    print msg
+
 End Sub
 ```
 
 2. Insert the SD card into the player and apply power.
-3. After reboot, the player is ready:
-   - **Local DWS** — open `http://<player-ip>/` in a browser to browse files, view diagnostics, and control the player
-   - **SSH** — `ssh brightsign@<player-ip>` for remote shell access and file transfers
-   - **BSC CLI** — install `npm install -g @brightsign/bsc` and use `bsc` commands against the player
+3. Wait for the player to display **"now manually reboot the player..."** on screen.
+4. Remove the SD card, then manually reboot the player.
+5. After reboot without the SD card, the player is ready:
+   - **Local DWS** — open `http://<player-ip>/` in a browser (no login required)
+   - **SSH** — `ssh brightsign@<player-ip>` with no password
+   - **BSC CLI** — install with `npm install -g @brightsign/bsc` and use `bsc` commands against the player
 
-That is sufficient for BrightScript, HTML5, and Node.js development.
+This is sufficient for BrightScript, HTML5, and Node.js development.
 
 **If you need to develop native OS extensions** — compiled code that runs as part of the OS rather than inside BrightScript or Node.js — you must first insecure the player. See [Insecuring a Player for Extension Development](#insecuring-a-player-for-extension-development). **This is an irreversible, one-way operation. Never do it to a production player.**
+
+---
+
+# Detailed Explanation of Developer Setup
 
 ---
 
