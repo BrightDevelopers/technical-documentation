@@ -35,7 +35,6 @@ BSN.cloud is BrightSign's cloud-based content management and device monitoring p
 | 1 | [Integrating with BSN.cloud](01-integrating-with-bsn-cloud.md) | Platform overview and authentication |
 | 2 | [Automated Provisioning](02-automated-provisioning.md) | Bulk device setup and registration |
 | 3 | [Per-Player Control](03-per-player-control.md) | Remote commands and monitoring |
-| 4 | [BSN.content](04-bsn-content.md) | Content management and scheduling |
 
 ---
 
@@ -47,7 +46,6 @@ Python and JavaScript examples for cloud integration:
 |----------|-------------|
 | [Provisioning](examples/provisioning/) | Bulk setup, auto-registration, fleet configuration |
 | [Player Control](examples/player-control/) | Reboot, firmware updates, status monitoring |
-| [Content Management](examples/content-management/) | Upload, scheduling, synchronization |
 
 [**Browse All Examples →**](examples/README.md)
 

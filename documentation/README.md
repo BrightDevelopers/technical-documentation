@@ -84,7 +84,6 @@ This section contains comprehensive technical documentation covering all aspects
 | [Integrating with BSN.cloud](part-5-bsn-cloud/01-integrating-with-bsn-cloud.md) | Platform overview and authentication |
 | [Automated Provisioning](part-5-bsn-cloud/02-automated-provisioning.md) | Streamline device deployment |
 | [Per-Player Control](part-5-bsn-cloud/03-per-player-control.md) | Individual player management |
-| [BSN.content](part-5-bsn-cloud/04-bsn-content.md) | Content management and distribution |
 
 [**Explore Part 5 →**](part-5-bsn-cloud/README.md)
 
