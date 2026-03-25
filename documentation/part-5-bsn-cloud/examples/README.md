@@ -18,11 +18,6 @@ Remote commands and device monitoring.
 
 *Examples coming soon.*
 
-### [Content Management](content-management/)
-Content upload, scheduling, and synchronization.
-
-*Examples coming soon.*
-
 ---
 
 [← Back to Part 5](../README.md)

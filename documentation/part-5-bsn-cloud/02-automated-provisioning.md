@@ -294,7 +294,6 @@ class "brightsign-players" {
 ## Next Steps
 
 - [Per-Player Control](03-per-player-control.md) -- Remote commands and monitoring
-- [BSN.content](04-bsn-content.md) -- Content management and scheduling
 - [Code Examples](examples/README.md) -- Recovery server implementations
 
 ---

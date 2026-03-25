@@ -14,7 +14,6 @@ This guide walks you through connecting your BrightSign player to BSN.cloud, Bri
 - Registering players with BSN.cloud
 - Automatic provisioning methods (mDNS, DHCP Option 43)
 - Using Remote DWS for cloud-based management
-- Deploying content through BSN.cloud
 - Monitoring player status and diagnostics
 
 ### BSN.cloud Benefits
@@ -22,9 +21,7 @@ This guide walks you through connecting your BrightSign player to BSN.cloud, Bri
 | Feature | Description |
 |---------|-------------|
 | **Remote Management** | Control players anywhere via web interface |
-| **Content Deployment** | Push content updates without physical access |
 | **Device Monitoring** | Real-time status, health checks, diagnostics |
-| **Scheduling** | Time-based content scheduling |
 | **Grouping** | Organize players by location, purpose, or network |
 | **REST APIs** | Programmatic control for custom integrations |
 
@@ -381,72 +378,7 @@ End Sub
 
 ---
 
-## Part 5: Content Deployment
-
-### Using BSN.cloud Web Interface
-
-1. **Upload Content**:
-   - Navigate to **Library** > **Media**
-   - Click **Upload** and select files
-   - Wait for processing to complete
-
-2. **Create Presentation**:
-   - Go to **Presentations**
-   - Click **Create Presentation**
-   - Add media to timeline
-   - Configure transitions and timing
-
-3. **Publish to Players**:
-   - Select your presentation
-   - Click **Publish**
-   - Choose target players or groups
-   - Confirm deployment
-
-### Using Sync Spec for Custom Deployment
-
-For programmatic content deployment, use sync specs:
-
-```json
-{
-    "meta": {
-        "client": "custom-cms",
-        "version": "1.0"
-    },
-    "files": {
-        "download": [
-            {
-                "name": "video1.mp4",
-                "link": "https://cdn.example.com/content/video1.mp4",
-                "size": 52428800,
-                "hash": "sha1:abc123..."
-            },
-            {
-                "name": "playlist.json",
-                "link": "https://cdn.example.com/content/playlist.json",
-                "size": 1024,
-                "hash": "sha1:def456..."
-            }
-        ],
-        "delete": [
-            "old-video.mp4"
-        ]
-    }
-}
-```
-
-Configure player to use sync spec:
-
-```brightscript
-Sub ConfigureSyncSpec()
-    reg = CreateObject("roRegistrySection", "networking")
-    reg.Write("nu", "https://content.example.com/sync-spec.json")
-    reg.Flush()
-End Sub
-```
-
----
-
-## Part 6: Monitoring and Diagnostics
+## Part 5: Monitoring and Diagnostics
 
 ### Player Status Monitoring
 
@@ -621,7 +553,6 @@ app.listen(80, () => {
 | mDNS not working | Multicast disabled | Enable multicast on network switches |
 | Option 43 not received | DHCP misconfigured | Verify DHCP class match and TLV encoding |
 | Player shows offline | WebSocket connection lost | Check network stability, firewall rules |
-| Content not updating | Sync spec URL wrong | Verify `nu` registry key |
 
 ### Network Requirements
 
@@ -643,14 +574,11 @@ Ensure these endpoints are accessible:
 
 3. **Remote Management**: Use the BSN.cloud REST API to list devices and send a reboot command
 
-4. **Content Deployment**: Create a sync spec and deploy content to multiple players
-
 ---
 
 ## Next Steps
 
 - [Implementing Live Data Feeds](11-implementing-live-data-feeds.md) - Display real-time information
-- [Fetching Remote Content](08-fetching-remote-content.md) - Download and cache content
 - [Integrating with REST APIs](09-integrating-rest-apis.md) - Consume external APIs
 
 ---
