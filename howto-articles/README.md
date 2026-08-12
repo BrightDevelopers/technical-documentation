@@ -51,7 +51,7 @@ Connect your players to the internet, integrate with APIs, and display live data
 |---------|-------------|
 | [Fetching Remote Content](08-fetching-remote-content.md) | Download and cache content from web servers |
 | [Integrating with REST APIs](09-integrating-rest-apis.md) | Consume external APIs in your applications |
-| [Setting Up BSN.cloud](10-setting-up-bsn-cloud.md) | Connect your player to BrightSign's cloud platform |
+| [Setting Up BrightSign Control](10-setting-up-bsn-cloud.md) | Connect your player to BrightSign's cloud platform |
 | [Implementing Live Data Feeds](11-implementing-live-data-feeds.md) | Display real-time information from external sources |
 
 ---
@@ -92,7 +92,6 @@ Have a topic you'd like to see covered? We welcome contributions from the commun
 ## Related Resources
 
 - **[Technical Documentation](../documentation/README.md)** - In-depth API and language references
-- **[Practical Examples](../practical-examples/README.md)** - Ready-to-use code samples
 
 ---
 

@@ -25,13 +25,13 @@
 |----------|-------------|
 | [BrightSign Documentation](https://docs.brightsign.biz/) | Official technical documentation |
 | [BrightSign GitHub](https://github.com/brightsign) | Open source tools and SDKs |
-| [BSN.cloud API Reference](https://docs.bsn.cloud/) | Cloud platform API documentation |
+| [BrightSign Control API Reference](https://docs.bsn.cloud/) | Cloud platform API documentation |
 | [BrightSign Community](https://github.com/orgs/BrightDevelopers/discussions) | Forums and developer community |
 
 ---
 
 <div align="center">
 
-[← Part 5: BSN.cloud](../part-5-bsn-cloud/README.md) · [Back to Main →](../../README.md)
+[← Part 5: BrightSign Control](../part-5-bsn-cloud/README.md) · [Back to Main →](../../README.md)
 
 </div>

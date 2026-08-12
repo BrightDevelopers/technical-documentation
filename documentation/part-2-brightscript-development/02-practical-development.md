@@ -1,4 +1,4 @@
-# Chapter 3: Practical BrightSign Software Development
+# Practical BrightSign Software Development
 
 [← Back to Part 2: BrightScript Development](README.md) | [↑ Main](../../README.md)
 
@@ -139,7 +139,7 @@ The DWS provides web-based access to player diagnostics, configuration, and remo
 Access via local network at `http://<player-ip>/`
 
 Default credentials:
-- Username: `admin`
+- Username: `admin` (always `admin`; it is not configurable)
 - Password: Player serial number (or custom-configured)
 
 **Enable Local DWS via BrightScript:**
@@ -149,25 +149,39 @@ reg.write("dwse", "yes")
 reg.flush()
 ```
 
+#### Authenticating to the DWS
+
+**Use digest authentication with the local DWS password.** The DWS does not accept HTTP basic auth, so `curl -u ...` on its own returns `401 Unauthorized` — you must pass `--digest`.
+
+The DWS password is a stable, user-set credential. Set it with `roNetworkConfiguration.SetupDWS({port: "80", open: "<password>"})`, or through `PUT /api/v1/control/dws-password/`. It is **not** a registry key. Use `open: "none"` for no authentication at all, on isolated development networks only.
+
+The player serves a self-signed TLS certificate over HTTPS, so add `-k` (`--insecure`) when using `https://`, or pin the real certificate with `--cacert <file>`.
+
+> **Do not build against the `x-api-key` header.** The DWS also accepts an `x-api-key` header, but that value is an **internal, auto-rotating token**, not a durable API key. The supervisor generates a UUID v1 at startup, stores it in the registry section `!supervisor.brightsignnetwork.com` under the key `apikeys`, and **rotates it on a timer** — replacing it with a brand-new UUID. Its purpose is the supervisor's own machine-to-machine bridge to the autorun application and the BrightSign Control client, not hand-rolled requests. On-player code never handles the raw key; the supervisor injects it on the internal channel. If you need the current value for local debugging you can read it (`registry read !supervisor.brightsignnetwork.com apikeys` from the BrightSign Shell), but expect it to change at the next rotation. Digest auth is the correct choice for any external or programmatic client.
+
 **LDWS API Examples:**
 
 ```bash
 # Get player info
-curl -u admin:serialnumber http://192.168.1.100/api/v1/info/player
+curl --digest -u admin:<dws-password> http://192.168.1.100/api/v1/info
 
 # Download file from player
-curl -u admin:serialnumber \
+curl --digest -u admin:<dws-password> \
   "http://192.168.1.100/api/v1/files/sd/myfile.txt?contents&stream" \
   -o myfile.txt
 
 # Reboot player
-curl -u admin:serialnumber -X PUT \
-  http://192.168.1.100/api/v1/reboot
+curl --digest -u admin:<dws-password> -X PUT \
+  -H "Content-Type: application/json" -d '{}' \
+  http://192.168.1.100/api/v1/control/reboot
+
+# Same call over HTTPS against the self-signed certificate
+curl -k --digest -u admin:<dws-password> https://192.168.1.100/api/v1/info
 ```
 
 **Remote DWS (RDWS):**
 
-Accessed via BSN.cloud or BrightAuthor:connected. Uses OAuth bearer tokens for authentication and provides remote access to:
+Accessed via BrightSign Control or BrightSign Author. Uses OAuth bearer tokens for authentication and provides remote access to:
 - Player status and logs
 - Network diagnostics
 - File upload/download (10MB limit)
@@ -300,15 +314,15 @@ url.AsyncGetToFile("SD:/content/largefile.mp4")
 
 ```bash
 # List files in directory
-curl -u admin:serial http://192.168.1.100/api/v1/files/sd/content
+curl --digest -u admin:<dws-password> http://192.168.1.100/api/v1/files/sd/content
 
-# Upload file to player
-curl -u admin:serial -X PUT \
+# Upload file to player (multipart; the form field name does not matter)
+curl --digest -u admin:<dws-password> -X PUT \
   -F "file=@video.mp4" \
   http://192.168.1.100/api/v1/files/sd/content/video.mp4
 
 # Delete file
-curl -u admin:serial -X DELETE \
+curl --digest -u admin:<dws-password> -X DELETE \
   http://192.168.1.100/api/v1/files/sd/content/oldfile.mp4
 ```
 
@@ -916,30 +930,36 @@ reg.Flush()
 ### Batch Operations
 
 **Multi-Player Configuration Script:**
-```brightscript
-' Configure multiple players from CSV
-sub ConfigureFleet(csvFile as String)
-    players = ParseCSV(ReadAsciiFile(csvFile))
+The registry API writes **one key at a time** — there is no bulk-write route. The valid routes are:
 
-    for each player in players
-        url = CreateObject("roUrlTransfer")
-        url.SetUrl("http://" + player.ip + "/api/v1/registry")
-        url.SetUserAndPassword("admin", player.serial)
+| Method | Route | Purpose |
+|--------|-------|---------|
+| `GET` | `/api/v1/registry` | Dump the full registry |
+| `GET` | `/api/v1/registry/<section>` | Read all keys in a section |
+| `GET` | `/api/v1/registry/<section>/<key>` | Read a single key |
+| `PUT` | `/api/v1/registry/<section>/<key>` | Set a single key |
+| `DELETE` | `/api/v1/registry/<section>[/<key>]` | Delete a section or key |
+| `PUT` | `/api/v1/registry/flush` | Flush the registry to disk |
 
-        ' Set registry values
-        config = {
-            networking: {
-                sip: player.static_ip
-                ssh: "22"
-            }
-        }
+```bash
+#!/bin/bash
+# Configure multiple players from CSV: ip,serial,dws_password,static_ip
 
-        url.AddHeader("Content-Type", "application/json")
-        url.PostFromString(FormatJson(config))
+while IFS=, read -r ip serial password static_ip; do
+    AUTH="--digest -u admin:$password"
+    BASE="http://$ip/api/v1/registry"
 
-        print "Configured: " + player.serial
-    end for
-end sub
+    # One PUT per key
+    curl $AUTH -X PUT -H "Content-Type: application/json" \
+        -d "{\"value\": \"$static_ip\"}" "$BASE/networking/sip"
+    curl $AUTH -X PUT -H "Content-Type: application/json" \
+        -d '{"value": "22"}' "$BASE/networking/ssh"
+
+    # Persist the writes to disk
+    curl $AUTH -X PUT "$BASE/flush"
+
+    echo "Configured: $serial"
+done < players.csv
 ```
 
 **Remote Reboot Script:**
@@ -952,15 +972,16 @@ PASSWORD="admin-password"
 
 for ip in "${PLAYERS[@]}"; do
     echo "Rebooting $ip..."
-    curl -u admin:$PASSWORD -X PUT \
-        http://$ip/api/v1/reboot
+    curl --digest -u admin:$PASSWORD -X PUT \
+        -H "Content-Type: application/json" -d '{}' \
+        http://$ip/api/v1/control/reboot
     sleep 2
 done
 ```
 
 ### Fleet Management
 
-**Control Cloud / BSN.Cloud Features:**
+**BrightSign Control Features:**
 - Real-time player health monitoring with 24-hour health reports
 - Remote player controls (reboot, diagnostics, settings)
 - Network groups and tagging for organization
@@ -1093,7 +1114,7 @@ reg.Flush()
 Access snapshots via DWS:
 ```bash
 # Get latest snapshot
-curl -u admin:serial \
+curl --digest -u admin:<dws-password> -X POST \
   http://192.168.1.100/api/v1/snapshot
 ```
 
@@ -1112,7 +1133,7 @@ This chapter covered the essential techniques for practical BrightSign developme
 
 By mastering these techniques, developers can build robust, maintainable, and performant BrightSign applications ready for production deployment.
 
-For specialized debugging techniques and advanced troubleshooting, continue to [Chapter 4: Debugging BrightScript](../chapter04-debugging-brightscript/).
+For specialized debugging techniques and advanced troubleshooting, continue to [Debugging BrightScript](03-debugging-brightscript.md).
 
 
 ---

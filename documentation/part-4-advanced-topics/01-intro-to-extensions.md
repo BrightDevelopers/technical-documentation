@@ -1,4 +1,4 @@
-# Chapter 10: Introduction to Native Extensions
+# Introduction to Native Extensions
 
 [← Back to Part 4: Advanced Topics](README.md) | [↑ Main](../../README.md)
 
@@ -50,7 +50,10 @@ The `bsext_init` script receives lifecycle commands:
 - `start` - Called during player boot
 - `stop` - Called during shutdown
 - `restart` - Called to restart the extension
+- `status` - Report whether the extension is currently running
 - `run` - Run in foreground (useful for testing)
+
+Implement all five. `start` and `stop` are called by the OS; you call `restart`, `status`, and `run` by hand during the development loop.
 
 ### Extension Lifecycle
 
@@ -139,12 +142,20 @@ case "$1" in
         sleep 1
         $0 start
         ;;
+    status)
+        if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
+            echo "hello extension is running (PID: $(cat "$PIDFILE"))"
+        else
+            echo "hello extension is not running"
+            exit 1
+        fi
+        ;;
     run)
         # Run in foreground for testing
         exec "$APP"
         ;;
     *)
-        echo "Usage: $0 {start|stop|restart|run}"
+        echo "Usage: $0 {start|stop|restart|status|run}"
         exit 1
         ;;
 esac

@@ -47,6 +47,6 @@ Take your BrightSign® development skills to the next level with advanced topics
 
 <div align="center">
 
-[← Part 3: JavaScript Development](../part-3-javascript-development/README.md) · [Part 5: BSN.cloud →](../part-5-bsn-cloud/README.md)
+[← Part 3: JavaScript Development](../part-3-javascript-development/README.md) · [Part 5: BrightSign Control →](../part-5-bsn-cloud/README.md)
 
 </div>

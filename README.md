@@ -4,7 +4,7 @@
 **Build on BrightSign. Ship in hours, not weeks.**
 
 [![BrightSign](https://img.shields.io/badge/brightsign.biz-8A2BE2?style=for-the-badge)](https://brightsign.biz)
-[![BSN.cloud](https://img.shields.io/badge/BSN%20Cloud-49C0FF?style=for-the-badge)](https://www.bsn.cloud/)
+[![BrightSign Control](https://img.shields.io/badge/BrightSign%20Control-49C0FF?style=for-the-badge)](https://www.bsn.cloud/)
 
 </div>
 
@@ -31,7 +31,7 @@ Our goal: **your first successful API call in under 15 minutes**, and a clear pa
 
 This repo contains technical documentation and guides. If you're building a cloud integration, start with the **[gopurple SDK](https://github.com/BrightDevelopers/gopurple)**—it's the fastest way to get working code.
 
-This program is for software developers building on BrightSign. If you just need to create presentations and manage players without writing code, check out [BrightAuthor:connected](https://www.brightsign.biz/brightauthor-connected/) and [BSN.cloud](https://www.brightsign.biz/bsn-cloud/).
+This program is for software developers building on BrightSign. If you just need to create presentations and manage players without writing code, check out [BrightSign Author](https://www.brightsign.biz/brightauthor-connected/) and [BrightSign Control](https://www.brightsign.biz/bsn-cloud/).
 
 ---
 
@@ -54,18 +54,18 @@ We've designed everything here for both **humans and AI assistants**. Every guid
 
 **Our priorities:**
 
-1. **Cloud-first** — BSN.cloud APIs for managing players, content, and schedules at scale
+1. **Cloud-first** — BrightSign Control APIs for managing players, content, and schedules at scale
 2. **On-player development** — Chromium (HTML/JavaScript) and Node.js for local applications
-3. **Edge AI** — NPU development on XS6 for computer vision and analytics
+3. **Edge AI** — NPU development on Series 5 and Series 6 players for computer vision and analytics
 4. **Extensions** — For capabilities that require going deeper
 
 ---
 
-# BSN.cloud
+# BrightSign Control
 
 ## Start Here: The Go SDK
 
-**[gopurple](https://github.com/BrightDevelopers/gopurple)** is our Go SDK for BSN.cloud—the fastest way to build cloud integrations.
+**[gopurple](https://github.com/BrightDevelopers/gopurple)** is our Go SDK for BrightSign Control—the fastest way to build cloud integrations.
 
 ```go
 client, _ := gopurple.New()
@@ -73,7 +73,7 @@ client.Authenticate(ctx)
 devices, _ := client.Devices.List(ctx, nil)
 ```
 
-The SDK includes **73 working example programs**—not snippets, but complete CLI tools you can run immediately. It handles authentication, pagination, error handling, and remote device control.
+The SDK includes **65 working example programs**—not snippets, but complete CLI tools you can run immediately. It handles authentication, pagination, error handling, and remote device control.
 
 **Why Go?** AI writes excellent Go code. Strong typing catches errors at compile time. Single binary deployment—no dependency management. And the patterns translate: AI assistants can reference gopurple to generate correct code in Python, TypeScript, or any language.
 
@@ -122,7 +122,7 @@ This repository contains documentation and guides. For working code, see the SDK
 
 <table>
 <tr>
-<td width="33%" align="center" valign="top">
+<td width="50%" align="center" valign="top">
 
 ### [Technical Documentation](documentation/README.md)
 
@@ -133,13 +133,13 @@ Comprehensive API documentation, language references, and detailed technical spe
 - BrightScript Language Reference
 - JavaScript Development
 - Native Extensions & NPU
-- BSN.cloud Integration
+- BrightSign Control Integration
 - Hardware Integrations
 
 [**Explore Documentation →**](documentation/README.md)
 
 </td>
-<td width="33%" align="center" valign="top">
+<td width="50%" align="center" valign="top">
 
 ### [How-To Articles](howto-articles/README.md)
 
@@ -155,25 +155,10 @@ Task-focused tutorials that walk you through common development scenarios.
 [**Browse How-To Articles →**](howto-articles/README.md)
 
 </td>
-<td width="33%" align="center" valign="top">
-
-### [Practical Examples](practical-examples/README.md)
-
-**Ready-to-use code**
-
-Code samples and projects for on-player development.
-
-- BrightScript examples
-- JavaScript/HTML5 samples
-- Node.js applications
-
-*For cloud API examples, see [gopurple](https://github.com/BrightDevelopers/gopurple)*
-
-[**View Examples →**](practical-examples/README.md)
-
-</td>
 </tr>
 </table>
+
+*For cloud API examples, see [gopurple](https://github.com/BrightDevelopers/gopurple).*
 
 ---
 

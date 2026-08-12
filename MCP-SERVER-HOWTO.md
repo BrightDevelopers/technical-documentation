@@ -1,6 +1,6 @@
 # BrightDeveloper MCP Server Setup Guide
 
-This guide explains how to connect the **BrightDeveloper MCP Server** to your AI coding assistants. The BrightDeveloper MCP server provides access to BrightSign technical documentation, including APIs for BrightSign players, BSN.cloud, BrightScript, and related developer resources.
+This guide explains how to connect the **BrightDeveloper MCP Server** to your AI coding assistants. The BrightDeveloper MCP server provides access to BrightSign technical documentation, including APIs for BrightSign players, BrightSign Control, BrightScript, and related developer resources.
 
 **MCP Server URL:** `https://brightdeveloper-mcp.bsn.cloud/mcp`
 
@@ -138,7 +138,7 @@ Alternatively, manually edit your user `mcp.json`:
 4. Ask questions about BrightSign development:
    - "What APIs are available for BrightSign players?"
    - "How do I use the Local DWS API?"
-   - "Show me how to upload content to BSN.cloud programmatically"
+   - "Show me how to upload content to BrightSign Control programmatically"
    - "What is BrightScript and how do I get started?"
 
 ---
@@ -208,15 +208,15 @@ The BrightDeveloper MCP server is hosted remotely. Ensure you have:
 Once connected, you can ask your AI assistant about:
 
 - **Player APIs:** Local DWS (Diagnostic Web Server), JavaScript APIs, BrightScript APIs
-- **BSN.cloud:** REST APIs, authentication, content management, device provisioning
-- **BrightAuthor:connected:** Creating presentations, publishing content
+- **BrightSign Control:** REST APIs, authentication, content management, device provisioning
+- **BrightSign Author:** Creating presentations, publishing content
 - **Development:** BrightScript programming, HTML5 app development, debugging
 - **Hardware:** Player specifications, GPIO, serial ports, networking
 
 ### Example Prompts
 
 ```
-"How do I authenticate with the BSN.cloud API?"
+"How do I authenticate with the BrightSign Control API?"
 "Show me an example of controlling a BrightSign player via the Local DWS"
 "What JavaScript APIs are available on BrightSign players?"
 "How do I create a BrightScript autorun file?"
@@ -228,7 +228,7 @@ Once connected, you can ask your AI assistant about:
 ## Additional Resources
 
 - [BrightSign Developer Documentation](https://docs.brightsign.biz/developers)
-- [BSN.cloud API Documentation](https://docs.brightsign.biz/developers/2025-api-usage-guide)
+- [BrightSign Control API Documentation](https://docs.brightsign.biz/developers/2025-api-usage-guide)
 - [Model Context Protocol Specification](https://modelcontextprotocol.io/)
 - [VS Code MCP Documentation](https://code.visualstudio.com/docs/copilot/customization/mcp-servers)
 

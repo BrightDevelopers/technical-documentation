@@ -1,4 +1,4 @@
-# Chapter 4: Debugging BrightScript
+# Debugging BrightScript
 
 [← Back to Part 2: BrightScript Development](README.md) | [↑ Main](../../README.md)
 
@@ -965,7 +965,7 @@ Effective debugging in BrightScript requires understanding the event-driven arch
 
 ## Next Steps
 
-Continue to [Chapter 5: Plugin Architecture](../chapter05-plugin-architecture/) to learn advanced modular programming patterns for building maintainable BrightScript applications.
+Continue to [Plugin Architecture](05-plugin-architecture.md) to learn advanced modular programming patterns for building maintainable BrightScript applications.
 
 
 ---

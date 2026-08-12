@@ -1,4 +1,4 @@
-# Chapter 6: JavaScript Playback
+# JavaScript Playback
 
 [← Back to Part 3: JavaScript Development](README.md) | [↑ Main](../../README.md)
 

@@ -1,4 +1,4 @@
-# Chapter 10: Writing Software for the NPU
+# Writing Software for the NPU
 
 [← Back to Part 4: Advanced Topics](README.md) | [↑ Main](../../README.md)
 
@@ -6,7 +6,7 @@
 
 ## Neural Processing Unit Development
 
-This chapter covers AI/ML capabilities on BrightSign players with integrated Neural Processing Unit (NPU) support. As of 2025, BrightSign has introduced NPU capabilities in their Series 6 players, enabling on-device AI processing for digital signage applications.
+This chapter covers AI/ML capabilities on BrightSign players with integrated Neural Processing Unit (NPU) support. BrightSign ships NPU-capable hardware across most of the Series 5 line and both Series 6 models, enabling on-device AI processing for digital signage applications.
 
 ## NPU Overview
 
@@ -21,13 +21,26 @@ A Neural Processing Unit (NPU) is a specialized processor designed to accelerate
 
 ### Hardware Availability
 
-BrightSign Series 6 players include NPU support:
+NPU support is **not** limited to the newest generation — most of the Series 5 line has it, which means you likely already have hardware you can develop against.
 
-- **HD6**: Standard model with NPU for AI-enabled applications
+**Series 6** — both shipping models include an NPU:
+
+- **XS156**: Embedded system-on-chip with integrated NPU
 - **XD6**: Enhanced model with NPU, 4K graphics, and PoE+ support
-- **XS6**: Embedded system-on-chip with integrated NPU
 
-**Important Note**: NPU support is available on Series 6 and newer players. Check your specific model documentation to confirm NPU capabilities.
+**Series 5** — every family includes an NPU **except XC5 and HD5**:
+
+| Family | NPU |
+|--------|-----|
+| **XT5** (XT245, XT1145, XT2145) | Yes |
+| **XD5** (XD235, XD1035) | Yes |
+| **LS5** (LS425, LS445) | Yes |
+| XC5 (XC2055, XC4055) | No |
+| HD5 (HD225, HD1025) | No |
+
+**Series 4 and earlier have no NPU.** If your target is XC5, HD5, or any Series 4 player, use the fallback ladder in [Alternative Approaches](#alternative-approaches) rather than planning around on-device inference.
+
+Confirm against the specific model before committing a design — this list moves as new hardware ships.
 
 ### Capabilities
 
@@ -45,7 +58,7 @@ NPUs operate primarily with 8-bit integer (INT8) data types for maximum efficien
 
 ### Model Formats
 
-While BrightSign has announced AI toolkits for Series 6 players, specific documentation about supported model formats is limited. Industry-standard NPU implementations typically support:
+While BrightSign has announced AI toolkits for NPU-capable players, specific documentation about supported model formats is limited. Industry-standard NPU implementations typically support:
 
 **TensorFlow Lite**
 - Lightweight framework designed for edge devices
@@ -1538,7 +1551,7 @@ function managePlaylist() {
 
 ### Current State of BrightSign NPU Support
 
-As of 2025, BrightSign has announced NPU capabilities in Series 6 players with AI toolkits for partner development. However:
+BrightSign has announced AI toolkits for partner development on NPU-capable players. However:
 
 - **Limited public documentation**: Specific APIs and supported frameworks are not fully documented
 - **Partner-focused**: AI toolkits may be primarily available to integration partners
@@ -1552,7 +1565,7 @@ For production deployments, consult BrightSign directly for:
 
 ### Hardware Constraints
 
-- **NPU availability**: Only Series 6 and newer players
+- **NPU availability**: Series 6 (XS156, XD6) and most of Series 5 - not XC5, HD5, or Series 4
 - **Memory limitations**: Models must fit in available RAM
 - **Processing power**: Balance AI workload with content playback
 - **Input sources**: HDMI input for camera/video sources
@@ -1605,7 +1618,7 @@ This chapter covered AI/ML development for BrightSign NPU-enabled players. Key t
 
 ## Next Steps
 
-Continue to [Chapter 11: Design Patterns](../chapter11-design-patterns/) to learn architectural patterns for building maintainable, scalable BrightSign applications that incorporate AI features alongside traditional digital signage functionality.
+Continue to [Design Patterns](../part-2-brightscript-development/04-design-patterns.md) to learn architectural patterns for building maintainable, scalable BrightSign applications that incorporate AI features alongside traditional digital signage functionality.
 
 
 ---

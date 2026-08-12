@@ -1,4 +1,4 @@
-# Chapter 7: JavaScript Node Programs
+# JavaScript Node Programs
 
 [← Back to Part 3: JavaScript Development](README.md) | [↑ Main](../../README.md)
 
@@ -24,9 +24,13 @@ BrightSign provides two Node.js versions:
 |---------------------|------------------|------------------|-------------------|
 | OS 8.0.x | Chromium 65 | 10.0.0 | 8.9.4 |
 | OS 8.1.x - 8.3.x | Chromium 69 | 10.11.0 | 10.15.3 |
-| OS 8.5.x, OS 9.0.x | Chromium 87 | **14.17.6** | **14.17.6** |
+| OS 8.5.x, OS 9.0.x | Chromium 87 | 14.17.6 | 14.17.6 |
+| OS 9.1.x | Chromium 120 | **18.18.2** | **18.18.2** |
+| OS 10.0.x | — | **24.15.0** | **24.15.0** |
 
-The integrated Node.js implementation in current OS versions is based on Node v14.17.6. For complete documentation, consult the [Node.js 14.x API documentation](https://nodejs.org/dist/v14.17.6/docs/api/).
+**The Node.js version is pinned to the BrightSignOS release — you do not choose it.** There is no `nvm` equivalent on the player; the OS release *is* the Node version. Target the version your fleet actually runs, and remember that a developer's desktop Node will differ.
+
+For API details, consult the documentation matching your target: [Node.js 14.x](https://nodejs.org/dist/v14.17.6/docs/api/), [Node.js 18.x](https://nodejs.org/dist/v18.18.2/docs/api/), or [Node.js 24.x](https://nodejs.org/dist/v24.15.0/docs/api/).
 
 ### Enabling Node.js
 
@@ -1580,7 +1584,7 @@ console.log("Data Logger application started");
 
 BrightSign's Node.js implementation provides powerful server-side capabilities for digital signage applications:
 
-- **Runtime**: Node.js 14.17.6 on OS 8.5+, integrated with Chromium V8 engine
+- **Runtime**: Node.js pinned to the OS release - 14.17.6 (OS 8.5.x-9.0.x), 18.18.2 (OS 9.1.x), 24.15.0 (OS 10.0.x) - integrated with the Chromium V8 engine
 - **Modules**: JavaScript-only modules supported; binary modules not compatible
 - **File System**: Full access to device storage (SD, SSD, USB) via standard `fs` module
 - **Networking**: HTTP servers, WebSockets, TCP/UDP sockets for local and remote communication

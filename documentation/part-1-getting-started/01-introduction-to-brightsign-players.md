@@ -1,4 +1,4 @@
-# Chapter 1: Introduction to BrightSign Players
+# Introduction to BrightSign Players
 
 [← Back to Part 1: Getting Started](README.md) | [↑ Main](../../README.md)
 
@@ -17,8 +17,8 @@ BrightSign players are specialized embedded systems optimized for continuous ope
 - Fanless, solid-state design with no moving parts
 - Hardware-accelerated video decoding up to 8K resolution
 - Integrated Chromium engine (version 87-120 depending on OS version) for HTML5/JavaScript applications
-- Network-managed deployment via BSN.cloud or third-party CMS
-- Neural Processing Unit (NPU) support on premium models for AI/ML workloads
+- Network-managed deployment via BrightSign Control or third-party CMS
+- Neural Processing Unit (NPU) support across most of Series 5 and all of Series 6 for AI/ML workloads
 
 **Primary Use Cases:**
 - Retail digital signage and promotional displays
@@ -42,7 +42,21 @@ BrightSign organizes its product line into series. Series 5 (introduced 2023) re
 | XT | Enterprise/premium |
 | XC | High-output multi-display |
 
+### Series 6 Models
+
+Two Series 6 models are shipping. Both include an NPU.
+
+**XS156**
+- Embedded system-on-chip with integrated NPU
+- Target use: Embedded and OEM integrations requiring on-device AI
+
+**XD6**
+- NPU, 4K graphics, and PoE+ support
+- Target use: Professional signage with on-device AI workloads
+
 ### Series 5 Models
+
+Every Series 5 family includes an NPU **except XC5 and HD5**.
 
 **XC5 (Elite Multi-Output)**
 - Models: XC2055 (dual HDMI), XC4055 (quad HDMI)
@@ -106,7 +120,8 @@ All Series 5 and newer players purchased after January 1, 2025 include a **5-yea
 BrightSign OS (BOS) is a customized Linux distribution built on the Yocto and OpenEmbedded projects. The architecture reflects a minimal-footprint philosophy: rather than starting with a full Linux distribution and removing components, BOS was constructed from a clean slate with only essential functionality.
 
 **Current Versions:**
-- **BOS 9.x**: Current release with Chromium 87 (9.0.x) or 120 (9.1.x), Node.js 14.17.6 or 18.18.2
+- **BOS 10.x**: Latest release, Node.js 24.15.0
+- **BOS 9.x**: Chromium 87 (9.0.x) or 120 (9.1.x), Node.js 14.17.6 (9.0.x) or 18.18.2 (9.1.x)
 - **BOS 8.x**: Stable release with Chromium 69-87, Node.js 10.15.3-14.17.6
 - Series 5 players support Chromium 110/120 upgrades for latest web standards
 
@@ -149,7 +164,7 @@ Built-in web interface accessible at `http://<player-ip>` providing:
 - Screenshot capture and performance metrics
 - REST API for programmatic access
 
-Available in both Local DWS (LDWS, on-network) and Remote DWS (RDWS, via BSN.cloud) variants.
+Available in both Local DWS (LDWS, on-network) and Remote DWS (RDWS, via BrightSign Control) variants.
 
 > **Note:** As of recent firmware updates, the DWS is **disabled by default** due to EU Radio Equipment Directive (RED) compliance requirements. You must explicitly enable it by running a short BrightScript on the player:
 > ```brightscript
@@ -158,7 +173,7 @@ Available in both Local DWS (LDWS, on-network) and Remote DWS (RDWS, via BSN.clo
 > reg.Flush()
 > CreateObject("roNetworkConfiguration", 0).SetupDWS({port:"80", open:"none"})
 > ```
-> This enables the DWS on port 80 with authentication required. Detailed setup instructions are covered in later chapters.
+> Note that `open:"none"` opens the DWS with **no authentication** — appropriate only on an isolated development network. For an authenticated DWS, pass the password instead: `SetupDWS({port:"80", open:"<password>"})`. The username is always `admin`, and clients must use **digest** authentication. Detailed setup instructions are covered in [Setting Up Your Development Environment](../../howto-articles/01-setting-up-development-environment.md).
 
 **Node.js Environment**
 Players ship with two Node.js instances:
@@ -167,9 +182,12 @@ Players ship with two Node.js instances:
 
 | OS Version | Node.js Version |
 |------------|-----------------|
+| BOS 10.0.x | 24.15.0 |
 | BOS 9.1.x | 18.18.2 |
 | BOS 8.5.x - 9.0.x | 14.17.6 |
 | BOS 8.1.x - 8.3.x | 10.15.3 |
+
+The Node.js version is determined by the OS release and is not separately selectable.
 
 **Local DWS Command-Line Interface (requires Local DWS to be enabled)**
 The `@brightsign/bsc` CLI tool communicates with the Local DWS REST APIs:
@@ -178,9 +196,9 @@ npm install -g @brightsign/bsc
 ```
 Provides file operations, registry management, screenshots, power control, and system diagnostics from your development machine.
 
-**Remote DWS Command-Line Interface (requires use of BSN.cloud)**
+**Remote DWS Command-Line Interface (requires use of BrightSign Control)**
 
-The [gopurple SDK](https://github.com/BrightDevelopers/gopurple) includes 34 ready-to-use command-line tools for remote device management via the Remote Diagnostic Web Server (rDWS) API. These tools enable you to manage players from anywhere through BSN.cloud.
+The [gopurple SDK](https://github.com/BrightDevelopers/gopurple) includes 34 ready-to-use command-line tools for remote device management via the Remote Diagnostic Web Server (rDWS) API. These tools enable you to manage players from anywhere through BrightSign Control.
 
 Key capabilities include:
 - Device information and health monitoring (`rdws-info`, `rdws-health`, `rdws-diagnostics`)
@@ -275,8 +293,8 @@ Performance scales with model tier—XC5/XT5 deliver up to 10x graphics performa
 - Dual external antenna option for improved range
 - Not recommended for high-bitrate video streaming
 
-**Remote Management via BSN.cloud:**
-Every BrightSign player includes free access to BSN.cloud, providing:
+**Remote Management via BrightSign Control:**
+Every BrightSign player includes free access to BrightSign Control, providing:
 - Real-time player health monitoring and 24-hour reports
 - Remote diagnostics, settings changes, and firmware updates
 - Player reboot and command execution from anywhere
@@ -285,7 +303,7 @@ Every BrightSign player includes free access to BSN.cloud, providing:
 - Integration with third-party CMS platforms
 
 **Third-Party CMS Integration:**
-BrightSign players work with numerous content management systems including Signagelive, Wallboard, signageOS, and many others that leverage the BSN.cloud APIs or Local DWS REST APIs.
+BrightSign players work with numerous content management systems including Signagelive, Wallboard, signageOS, and many others that leverage the BrightSign Control APIs or Local DWS REST APIs.
 
 ## Storage & File Systems
 
@@ -407,14 +425,14 @@ BrightSign supports two primary development approaches:
 2. **Deploy** via SD card, USB, or network (using `bsc` CLI or DWS)
 3. **Test** on player, checking serial console or DWS logs for errors
 4. **Iterate** using the DWS file upload for rapid testing
-5. **Deploy to production** via BSN.cloud or CMS
+5. **Deploy to production** via BrightSign Control or CMS
 
 ### Deployment Strategies
 
 | Strategy | Best For | Method |
 |----------|----------|--------|
 | Local | 1-10 players, demos | Manual SD card updates |
-| Network | 10+ players, enterprise | BSN.cloud or third-party CMS |
+| Network | 10+ players, enterprise | BrightSign Control or third-party CMS |
 | Hybrid | Initial setup + updates | SD card provisioning, network updates |
 
 ## Prerequisites
@@ -434,7 +452,7 @@ By completing this chapter, you should understand:
 
 ## Next Steps
 
-Continue to [Chapter 2: BrightScript Language Reference](../chapter02-brightscript-language-reference/) to learn the BrightScript programming language, including syntax, built-in objects, and development patterns for BrightSign applications.
+Continue to [BrightScript Language Reference](../part-2-brightscript-development/01-brightscript-language-reference.md) to learn the BrightScript programming language, including syntax, built-in objects, and development patterns for BrightSign applications.
 
 
 ---

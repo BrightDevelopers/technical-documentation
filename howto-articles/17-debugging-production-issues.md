@@ -90,13 +90,15 @@ device.Reboot()
 **Connect via SSH:**
 
 ```bash
-# Default credentials (unsecured players)
-ssh root@192.168.1.100
-# Password: player serial number
+# brightsign is the only SSH user - there is no root SSH login on any build
+ssh brightsign@192.168.1.100
+# Password: the login password set with roNetworkConfiguration.SetLoginPassword()
 
 # Or via mDNS
-ssh root@BrightSign-SERIALNUMBER.local
+ssh brightsign@brightsign-SERIALNUMBER.local
 ```
+
+The session attaches to whatever layer the player is currently running — usually the console of the running application, not a prompt. Descend with `Ctrl-C` + Enter (BrightScript Debugger), then `exit` (BrightSign Shell), then `exit` again (root Linux shell, insecured players only). One-shot commands (`ssh brightsign@<player> "<command>"`) do not work. See [Setting Up Your Development Environment](01-setting-up-development-environment.md#ssh-attaches-to-whatever-layer-is-currently-running).
 
 ### Method 3: Telnet Access
 
@@ -309,7 +311,61 @@ function processData(data) {
 
 ## Part 4: Diagnostic Web Server (DWS)
 
-### Accessing DWS Pages
+### Two DWS surfaces — know which one your player exposes
+
+A player presents **one of two different DWS APIs**, and which one you get is decided by a single registry key.
+
+**`networking.bbhf` is the switch:**
+
+| `bbhf` | What the player exposes |
+|--------|-------------------------|
+| Set (`on`) | The modern `/api/v1/...` REST API — ~127 routes — **and** the legacy endpoints |
+| Unset | Only the pre-BrightSign-Control "legacy" DWS and its endpoints |
+
+**This is the usual explanation for "half the endpoints 404 on this player."** Before you start debugging your client, check the key:
+
+```bash
+curl --digest -u admin:<dws-password> \
+  http://192.168.1.100/api/v1/registry/networking/bbhf
+```
+
+If the modern API is what you want and `bbhf` is unset, set it (`reg.Write("bbhf", "on")` in the `networking` section, then reboot) — see [Setting Up Your Development Environment](01-setting-up-development-environment.md).
+
+**Prefer the modern API for anything new.** It is authenticated, versioned, self-describing (`GET /api/v1/` returns the live route list with a `securityLevel` on each route), and it is what the rest of this documentation set uses.
+
+### Modern API: `/api/v1/...` (preferred)
+
+Digest authentication is required — `curl -u` alone returns `401`. The username is always `admin`.
+
+```bash
+AUTH="--digest -u admin:<dws-password>"
+BASE=http://192.168.1.100/api/v1
+
+curl $AUTH $BASE/info                      # Player identity
+curl $AUTH $BASE/health                    # Health
+curl $AUTH $BASE/logs                      # Logs
+curl $AUTH $BASE/registry                  # Full registry dump
+curl $AUTH -X POST $BASE/snapshot          # Screenshot
+curl $AUTH $BASE/legacy/storage_info       # Raw low-level dumps
+```
+
+| Route | Purpose |
+|-------|---------|
+| `GET /api/v1/` | Live route list, each with a `securityLevel` |
+| `GET /api/v1/info`, `/health`, `/time` | Identity, health, clock |
+| `GET /api/v1/logs`, `/download-log-package` | Logs and log bundles |
+| `GET /api/v1/registry[/<section>[/<key>]]` | Registry read |
+| `POST /api/v1/snapshot` | Screenshot |
+| `GET/PUT/DELETE /api/v1/files/*` | File operations |
+| `PUT /api/v1/control/reboot` | Reboot |
+| `GET /api/v1/diagnostics[/ping/*|/dns-lookup/*]` | Network diagnostics |
+| `GET /api/v1/legacy/<name>` | ~45 raw dumps (`processes`, `dmesg`, `registry_dump`, `secure_boot`, …) |
+
+> The whole `/api/v1` surface is served by the **Supervisor**. If you have descended to the root Linux shell over SSH, the Supervisor is stopped and every one of these calls fails — see [Interactive Debugging](01-setting-up-development-environment.md#interactive-debugging-descending-through-the-shell-layers).
+
+### Legacy endpoints (older players, `bbhf` unset)
+
+These are the pre-BrightSign-Control endpoints. They are unauthenticated, which is exactly why they should not be reachable from an untrusted network. Use them only when the modern API is unavailable on the target.
 
 ```bash
 # Player info
@@ -323,26 +379,18 @@ curl http://192.168.1.100/GetRegistry
 
 # Screenshot
 wget http://192.168.1.100/GetScreenshot -O screenshot.jpg
-
-# Storage info
-curl http://192.168.1.100/GetStorageInfo
-
-# Network diagnostics
-curl http://192.168.1.100/GetNetworkDiagnostics
 ```
 
-### Useful DWS Endpoints
-
-| Endpoint | Purpose | Output |
-|----------|---------|--------|
-| `/` | Player dashboard | HTML |
-| `/GetSystemLog` | System logs | Text |
-| `/GetPlaybackLog` | Playback events | Text |
-| `/GetRegistry` | Registry values | JSON |
-| `/GetStorageInfo` | Disk usage | JSON |
-| `/GetNetworkDiagnostics` | Network tests | JSON |
-| `/GetScreenshot` | Current display | JPEG |
-| `/Reboot` | Reboot player | - |
+| Legacy endpoint | Purpose | Output | Modern equivalent |
+|----------|---------|--------|-------------------|
+| `/` | Player dashboard | HTML | `/api/v1/info` |
+| `/GetSystemLog` | System logs | Text | `/api/v1/logs` |
+| `/GetPlaybackLog` | Playback events | Text | `/api/v1/logs` |
+| `/GetRegistry` | Registry values | JSON | `/api/v1/registry` |
+| `/GetStorageInfo` | Disk usage | JSON | `/api/v1/legacy/storage_info` |
+| `/GetNetworkDiagnostics` | Network tests | JSON | `/api/v1/diagnostics` |
+| `/GetScreenshot` | Current display | JPEG | `POST /api/v1/snapshot` |
+| `/Reboot` | Reboot player | - | `PUT /api/v1/control/reboot` |
 
 ### Automated Log Collection
 

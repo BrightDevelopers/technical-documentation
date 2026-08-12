@@ -1,4 +1,4 @@
-# Setting Up BSN.cloud
+# Setting Up BrightSign Control
 
 [← Back to How-To Articles](README.md) | [↑ Main](../README.md)
 
@@ -6,18 +6,18 @@
 
 ## Introduction
 
-This guide walks you through connecting your BrightSign player to BSN.cloud, BrightSign's cloud management platform. BSN.cloud provides centralized device management, content deployment, remote monitoring, and enterprise-scale control over your digital signage network.
+This guide walks you through connecting your BrightSign player to BrightSign Control, BrightSign's cloud management platform. BrightSign Control provides centralized device management, content deployment, remote monitoring, and enterprise-scale control over your digital signage network.
 
 ### What You'll Learn
 
-- Creating a BSN.cloud account and network
-- Registering players with BSN.cloud
+- Creating a BrightSign Control account and network
+- Registering players with BrightSign Control
 - Automatic provisioning methods (mDNS, DHCP Option 43)
 - Using Remote DWS for cloud-based management
-- Deploying content through BSN.cloud
+- Deploying content through BrightSign Control
 - Monitoring player status and diagnostics
 
-### BSN.cloud Benefits
+### BrightSign Control Benefits
 
 | Feature | Description |
 |---------|-------------|
@@ -33,17 +33,17 @@ This guide walks you through connecting your BrightSign player to BSN.cloud, Bri
 ## Prerequisites
 
 - BrightSign player with network connectivity
-- Email address for BSN.cloud account
+- Email address for BrightSign Control account
 - Basic understanding of networking (DHCP, DNS)
 - Development environment set up ([see setup guide](01-setting-up-development-environment.md))
 
 ---
 
-## Part 1: BSN.cloud Account Setup
+## Part 1: BrightSign Control Account Setup
 
-### Step 1: Create a BSN.cloud Account
+### Step 1: Create a BrightSign Control Account
 
-1. Navigate to [BSN.cloud](https://www.bsn.cloud)
+1. Navigate to [BrightSign Control](https://www.bsn.cloud)
 2. Click "Sign Up" or "Create Account"
 3. Enter your email address and create a password
 4. Verify your email address
@@ -53,7 +53,7 @@ This guide walks you through connecting your BrightSign player to BSN.cloud, Bri
 
 A network is a logical grouping for your players and content:
 
-1. Log in to BSN.cloud
+1. Log in to BrightSign Control
 2. Navigate to **Admin** > **Networks**
 3. Click **Create Network**
 4. Enter a network name (e.g., "Retail Stores - West Region")
@@ -66,7 +66,7 @@ Your network is now ready for player registration.
 
 ## Part 2: Manual Player Registration
 
-The simplest way to register a player with BSN.cloud.
+The simplest way to register a player with BrightSign Control.
 
 ### Step 1: Connect Player to Network
 
@@ -86,23 +86,23 @@ The simplest way to register a player with BSN.cloud.
    - Username: `admin`
    - Password: Player's serial number (found on device label)
 
-### Step 3: Register with BSN.cloud
+### Step 3: Register with BrightSign Control
 
 1. In Local DWS, go to **Setup** > **Cloud Services**
-2. Select **BSN.cloud**
-3. Enter your BSN.cloud credentials
+2. Select **BrightSign Control**
+3. Enter your BrightSign Control credentials
 4. Select the network to join
 5. Click **Register**
 
 The player will:
 - Generate a registration token
-- Contact BSN.cloud authentication services
+- Contact BrightSign Control authentication services
 - Complete OAuth token exchange
 - Establish WebSocket connection for real-time communication
 
 ### Step 4: Verify Registration
 
-In BSN.cloud:
+In BrightSign Control:
 1. Navigate to **Devices** > **Players**
 2. Your player should appear with status "Online"
 3. Click the player to view details and diagnostics
@@ -142,7 +142,7 @@ BrightSign players automatically look for a server at `http://brightsign-b-deplo
    ```brightscript
    ' recovery.brs - Provisioning script
    Sub Main()
-       ' Configure BSN.cloud registration
+       ' Configure BrightSign Control registration
        reg = CreateObject("roRegistrySection", "networking")
        reg.Write("nu", "https://api.bsn.cloud/...")  ' Network update URL
        reg.Flush()
@@ -262,11 +262,11 @@ option 43 hex 551468747470733a2f2f6578616d706c652e636f6d2f
 
 ## Part 4: Using Remote DWS
 
-Remote DWS (Device Web Server) allows cloud-based access to player settings through BSN.cloud.
+Remote DWS (Device Web Server) allows cloud-based access to player settings through BrightSign Control.
 
 ### Accessing Remote DWS
 
-1. Log in to BSN.cloud
+1. Log in to BrightSign Control
 2. Navigate to **Devices** > **Players**
 3. Click on your player
 4. Click **Remote DWS** or **Device Settings**
@@ -383,7 +383,7 @@ End Sub
 
 ## Part 5: Content Deployment
 
-### Using BSN.cloud Web Interface
+### Using BrightSign Control Web Interface
 
 1. **Upload Content**:
    - Navigate to **Library** > **Media**
@@ -418,13 +418,13 @@ For programmatic content deployment, use sync specs:
                 "name": "video1.mp4",
                 "link": "https://cdn.example.com/content/video1.mp4",
                 "size": 52428800,
-                "hash": "sha1:abc123..."
+                "hash": "sha256:e3b0c44298fc1c149afbf4c8996fb924..."
             },
             {
                 "name": "playlist.json",
                 "link": "https://cdn.example.com/content/playlist.json",
                 "size": 1024,
-                "hash": "sha1:def456..."
+                "hash": "sha256:2c26b46b68ffc68ff99b453c1d304134..."
             }
         ],
         "delete": [
@@ -450,7 +450,7 @@ End Sub
 
 ### Player Status Monitoring
 
-BSN.cloud provides real-time monitoring:
+BrightSign Control provides real-time monitoring:
 
 | Metric | Description |
 |--------|-------------|
@@ -463,7 +463,7 @@ BSN.cloud provides real-time monitoring:
 
 ### Accessing Logs
 
-Through BSN.cloud:
+Through BrightSign Control:
 1. Select your player
 2. Click **Diagnostics** > **Logs**
 3. View or download log files
@@ -502,7 +502,7 @@ Sub ReportHealth()
         firmwareVersion: deviceInfo.GetVersion()
     }
 
-    ' Report to BSN.cloud via WebSocket or REST
+    ' Report to BrightSign Control via WebSocket or REST
     SendHealthReport(health)
 End Sub
 ```
@@ -533,7 +533,7 @@ app.get('/recovery.brs', (req, res) => {
 Sub Main()
     print "Starting auto-provisioning..."
 
-    ' Configure BSN.cloud
+    ' Configure BrightSign Control
     ConfigureBsnCloud()
 
     ' Download initial content
@@ -548,7 +548,7 @@ Sub ConfigureBsnCloud()
     reg.Write("nu", "${config.contentServer}/sync-spec.json")
     reg.Flush()
 
-    print "BSN.cloud configuration complete"
+    print "BrightSign Control configuration complete"
 End Sub
 
 Sub DownloadInitialContent()
@@ -629,7 +629,7 @@ Ensure these endpoints are accessible:
 
 | Endpoint | Purpose |
 |----------|---------|
-| `*.bsn.cloud` | BSN.cloud services |
+| `*.bsn.cloud` | BrightSign Control services |
 | `*.brightsignnetwork.com` | Legacy services, diagnostics |
 | `time.brightsignnetwork.com` | NTP time sync |
 
@@ -637,11 +637,11 @@ Ensure these endpoints are accessible:
 
 ## Exercises
 
-1. **Manual Registration**: Register a player with BSN.cloud using Local DWS
+1. **Manual Registration**: Register a player with BrightSign Control using Local DWS
 
 2. **mDNS Provisioning**: Set up an mDNS provisioning server and register 3 players automatically
 
-3. **Remote Management**: Use the BSN.cloud REST API to list devices and send a reboot command
+3. **Remote Management**: Use the BrightSign Control REST API to list devices and send a reboot command
 
 4. **Content Deployment**: Create a sync spec and deploy content to multiple players
 

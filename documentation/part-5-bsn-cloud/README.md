@@ -2,23 +2,23 @@
 
 [← Back to Main](../../README.md) · [← Part 4](../part-4-advanced-topics/README.md)
 
-# Part 5: BSN.cloud Integration
+# Part 5: BrightSign Control Integration
 
 **Enterprise content management and fleet control**
 
-[![BSN.cloud](https://img.shields.io/badge/BSN-Cloud-49C0FF?style=flat-square)](https://www.bsn.cloud/)
+[![BrightSign Control](https://img.shields.io/badge/BrightSign%20Control-49C0FF?style=flat-square)](https://www.bsn.cloud/)
 
 </div>
 
 ---
 
-BSN.cloud is BrightSign's cloud-based content management and device monitoring platform. Integrating with BSN.cloud enables remote content updates, device health monitoring, and centralized fleet management.
+BrightSign Control is BrightSign's cloud-based content management and device monitoring platform. Integrating with BrightSign Control enables remote content updates, device health monitoring, and centralized fleet management.
 
 ## What You'll Learn
 
 | Topic | Description |
 |-------|-------------|
-| **Platform Architecture** | BSN.cloud capabilities and components |
+| **Platform Architecture** | BrightSign Control capabilities and components |
 | **REST API Integration** | Content and device management APIs |
 | **Cloud Applications** | Building cloud-connected experiences |
 | **Remote Monitoring** | Device health and diagnostics |
@@ -32,22 +32,25 @@ BSN.cloud is BrightSign's cloud-based content management and device monitoring p
 
 | # | Chapter | Description |
 |:-:|---------|-------------|
-| 1 | [Integrating with BSN.cloud](01-integrating-with-bsn-cloud.md) | Platform overview and authentication |
+| 1 | [Integrating with BrightSign Control](01-integrating-with-bsn-cloud.md) | Platform overview and authentication |
 | 2 | [Automated Provisioning](02-automated-provisioning.md) | Bulk device setup and registration |
 | 3 | [Per-Player Control](03-per-player-control.md) | Remote commands and monitoring |
-| 4 | [BSN.content](04-bsn-content.md) | Content management and scheduling |
+| 4 | [BrightSign Author Plus](04-bsn-content.md) | Content management and scheduling |
+| 5 | [Programming Against the Cloud with gopurple](05-programming-with-gopurple.md) | The Go SDK for BrightSign Control |
 
 ---
 
 ## Code Examples
 
-Python and JavaScript examples for cloud integration:
+Examples for cloud integration:
 
-| Category | Description |
-|----------|-------------|
-| [Provisioning](examples/provisioning/) | Bulk setup, auto-registration, fleet configuration |
-| [Player Control](examples/player-control/) | Reboot, firmware updates, status monitoring |
-| [Content Management](examples/content-management/) | Upload, scheduling, synchronization |
+| Category | Description | Status |
+|----------|-------------|--------|
+| Provisioning | Bulk setup, auto-registration, fleet configuration | *Coming soon* |
+| Player Control | Reboot, firmware updates, status monitoring | *Coming soon* |
+| Content Management | Upload, scheduling, synchronization | *Coming soon* |
+
+For working cloud code today, see the **[gopurple SDK](https://github.com/BrightDevelopers/gopurple)** — 65 runnable example CLI tools — and [Programming Against the Cloud with gopurple](05-programming-with-gopurple.md).
 
 [**Browse All Examples →**](examples/README.md)
 

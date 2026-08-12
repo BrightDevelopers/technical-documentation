@@ -1,4 +1,4 @@
-# Chapter 11: Design Patterns
+# Design Patterns
 
 [← Back to Part 2: BrightScript Development](README.md) | [↑ Main](../../README.md)
 
@@ -1824,7 +1824,7 @@ End Sub
 
 ### Next Steps
 
-- Review [Chapter 5: Plugin Architecture](../chapter05-plugin-architecture/) for advanced modular programming patterns
+- Review [Plugin Architecture](05-plugin-architecture.md) for advanced modular programming patterns
 - Study production BrightScript code to see patterns in action
 - Practice implementing patterns in your own projects
 - Combine patterns to solve complex architectural challenges

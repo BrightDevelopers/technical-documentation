@@ -75,16 +75,17 @@ This section contains comprehensive technical documentation covering all aspects
 
 ---
 
-## Part 5: BSN.cloud Integration
+## Part 5: BrightSign Control Integration
 
-> *Connect to BSN.cloud for enterprise content management and fleet control.*
+> *Connect to BrightSign Control for enterprise content management and fleet control.*
 
 | Chapter | Description |
 |---------|-------------|
-| [Integrating with BSN.cloud](part-5-bsn-cloud/01-integrating-with-bsn-cloud.md) | Platform overview and authentication |
+| [Integrating with BrightSign Control](part-5-bsn-cloud/01-integrating-with-bsn-cloud.md) | Platform overview and authentication |
 | [Automated Provisioning](part-5-bsn-cloud/02-automated-provisioning.md) | Streamline device deployment |
 | [Per-Player Control](part-5-bsn-cloud/03-per-player-control.md) | Individual player management |
-| [BSN.content](part-5-bsn-cloud/04-bsn-content.md) | Content management and distribution |
+| [BrightSign Author Plus](part-5-bsn-cloud/04-bsn-content.md) | Content management and distribution |
+| [Programming Against the Cloud with gopurple](part-5-bsn-cloud/05-programming-with-gopurple.md) | The Go SDK for BrightSign Control |
 
 [**Explore Part 5 →**](part-5-bsn-cloud/README.md)
 
@@ -104,7 +105,6 @@ This section contains comprehensive technical documentation covering all aspects
 ## Related Resources
 
 - **[How-To Articles](../howto-articles/README.md)** - Step-by-step tutorials for common tasks
-- **[Practical Examples](../practical-examples/README.md)** - Ready-to-use code samples
 
 ---
 
