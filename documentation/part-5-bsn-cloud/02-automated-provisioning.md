@@ -1,12 +1,12 @@
 # Automated Provisioning
 
-[<- Back to Part 5: BSN Cloud](README.md) | [^ Main](../../README.md)
+[<- Back to Part 5: BrightSign Control](README.md) | [^ Main](../../README.md)
 
 ---
 
 ## Overview
 
-BrightSign players include a built-in provisioning and recovery system that enables zero-touch deployment and remote content management. This system works independently of BSN.cloud and can be integrated with custom provisioning servers, making it suitable for both cloud-managed and self-hosted deployment scenarios.
+BrightSign players include a built-in provisioning and recovery system that enables zero-touch deployment and remote content management. This system works independently of BrightSign Control and can be integrated with custom provisioning servers, making it suitable for both cloud-managed and self-hosted deployment scenarios.
 
 The provisioning system uses a **recovery URL** (`ru`) to download autorun scripts from a remote server. The player makes HTTP GET requests to this URL at different stages of its lifecycle, allowing your server to push updates, monitor health, and recover from failures.
 
@@ -33,7 +33,7 @@ The primary registry key for recovery is **`ru`** -- the provisioning/recovery U
 | `ub` | URL prefix applied to `ru`, `eu`, and `cu` (unless value contains a colon) |
 | `p` | Password for the recovery handler |
 
-These keys live in the **"networking"** section of the player registry, accessible via the BrightScript `roRegistrySection` object or through BrightAuthor:connected setup.
+These keys live in the **"networking"** section of the player registry, accessible via the BrightScript `roRegistrySection` object or through BrightSign Author setup.
 
 ---
 
@@ -50,7 +50,7 @@ When a BrightSign player boots and obtains an IP address, it checks for a recove
 
 ### Configuration Methods
 
-**Option A -- BrightAuthor:connected Setup**
+**Option A -- BrightSign Author Setup**
 
 During player setup, the provisioning/recovery URL is one of the fields configured in the setup wizard before writing to the SD card.
 
@@ -70,7 +70,7 @@ Access the player's DWS at `http://<player-ip>/` and navigate to the registry ed
 
 | Where | How |
 |-------|-----|
-| Player registry (`ru` key) | Set during BrightAuthor:connected setup or via DWS |
+| Player registry (`ru` key) | Set during BrightSign Author setup or via DWS |
 | DHCP Option 43 | Network-level override; no per-device config needed |
 | DNS mapping | Zero-config fallback using `brightsign.b-deploy` hostname |
 | mDNS | Auto-discovery of `brightsign.b-deploy.local` on local network |
@@ -294,9 +294,9 @@ class "brightsign-players" {
 ## Next Steps
 
 - [Per-Player Control](03-per-player-control.md) -- Remote commands and monitoring
-- [BSN.content](04-bsn-content.md) -- Content management and scheduling
+- [BrightSign Author Plus](04-bsn-content.md) -- Content management and scheduling
 - [Code Examples](examples/README.md) -- Recovery server implementations
 
 ---
 
-[^ Part 5: BSN Cloud](README.md)
+[^ Part 5: BrightSign Control](README.md)

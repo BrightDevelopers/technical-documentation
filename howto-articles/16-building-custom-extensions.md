@@ -294,6 +294,16 @@ run() {
     $NODE_BIN $APP_SCRIPT
 }
 
+status() {
+    # Note: BrightSignOS BusyBox has no pgrep/pkill - use the pidfile
+    if [ -f "$PID_FILE" ] && kill -0 "$(cat $PID_FILE)" 2>/dev/null; then
+        echo "${EXTENSION_NAME} is running (PID: $(cat $PID_FILE))"
+    else
+        echo "${EXTENSION_NAME} is not running"
+        return 1
+    fi
+}
+
 case "$1" in
     start)
         start
@@ -306,11 +316,14 @@ case "$1" in
         sleep 1
         start
         ;;
+    status)
+        status
+        ;;
     run)
         run
         ;;
     *)
-        echo "Usage: $0 {start|stop|restart|run}"
+        echo "Usage: $0 {start|stop|restart|status|run}"
         exit 1
 esac
 ```
@@ -631,12 +644,16 @@ docker run --rm -v $(pwd):/workspace brightsign-sdk:latest \
 
 **Via SSH:**
 
-```bash
-# Copy extension to player
-scp my-extension.sqsh root@192.168.1.100:/storage/sd/
+`brightsign` is the only SSH user — there is no `root` SSH login. The commands below run in the **root Linux shell**, which you reach by descending: `Ctrl-C` then Enter (to the BrightScript Debugger), `exit` (to the BrightSign Shell), `exit` again (to the root shell). That last `exit` only drops to root on an **insecured** player; on a secured player it reboots. See [Setting Up Your Development Environment](01-setting-up-development-environment.md#interactive-debugging-descending-through-the-shell-layers).
 
-# SSH to player
-ssh root@192.168.1.100
+One-shot commands (`ssh brightsign@<player> "<command>"`) do not work — the login is an interactive REPL with no `-c` form. Type each command into the descended session.
+
+```bash
+# Copy extension to player (scp is a separate subsystem and works normally)
+scp my-extension.sqsh brightsign@192.168.1.100:/storage/sd/
+
+# SSH to player, then descend to the root Linux shell
+ssh brightsign@192.168.1.100
 
 # Install extension
 install-extension /storage/sd/my-extension.sqsh
@@ -692,10 +709,12 @@ cp my-extension.bsfw /media/sd-card/
 # Player automatically installs on boot
 
 # Verify installation via DWS
-curl http://192.168.1.100/GetExtensions
+curl --digest -u admin:<dws-password> http://192.168.1.100/api/v1/legacy/extensions
 
-# Or via SSH
-ssh root@192.168.1.100 "ls /var/volatile/bsext/"
+# Or over SSH: connect, descend to the root Linux shell, then run
+#   ls /var/volatile/bsext/
+# One-shot forms such as ssh brightsign@<player> "ls ..." do not work.
+ssh brightsign@192.168.1.100
 ```
 
 ---
@@ -857,8 +876,8 @@ function getPlayerId(): string {
 ### Debugging Extensions
 
 ```bash
-# SSH to player
-ssh root@192.168.1.100
+# SSH to player, then descend to the root Linux shell (insecured players only)
+ssh brightsign@192.168.1.100
 
 # Manual start for testing
 /var/volatile/bsext/my-extension/bsext_init run

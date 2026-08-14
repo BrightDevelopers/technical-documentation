@@ -745,7 +745,7 @@ End Sub
 ## Next Steps
 
 - [Integrating with REST APIs](09-integrating-rest-apis.md) - Consume external APIs in your applications
-- [Setting Up BSN.cloud](10-setting-up-bsn-cloud.md) - Connect players to BrightSign's cloud platform
+- [Setting Up BrightSign Control](10-setting-up-bsn-cloud.md) - Connect players to BrightSign's cloud platform
 - [Implementing Live Data Feeds](11-implementing-live-data-feeds.md) - Display real-time information
 
 ---

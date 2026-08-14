@@ -1,4 +1,4 @@
-# Chapter 8: Debugging JavaScript
+# Debugging JavaScript
 
 [← Back to Part 3: JavaScript Development](README.md) | [↑ Main](../../README.md)
 
@@ -1850,7 +1850,7 @@ Always disable debugging features in production deployments to prevent memory le
 
 ## Next Steps
 
-Continue to [Chapter 9: Writing Extensions](../chapter09-writing-extensions/) to learn how to extend BrightSign functionality with custom modules and integrations.
+Continue to [Introduction to Native Extensions](../part-4-advanced-topics/01-intro-to-extensions.md) to learn how to extend BrightSign functionality with custom modules and integrations.
 
 
 ---

@@ -17,7 +17,7 @@ This guide walks you through configuring your workstation for BrightSign develop
 ## Prerequisites
 
 **Hardware Required:**
-- BrightSign player (any Series 4 or 5 model)
+- BrightSign player (any Series 4, 5, or 6 model)
 - MicroSD card (Class 10 minimum, 16GB+ recommended)
 - Display with HDMI input
 - HDMI cable
@@ -27,7 +27,7 @@ This guide walks you through configuring your workstation for BrightSign develop
 - USB-to-serial cable for console access (FTDI FT232RL or Prolific PL2303GT chipset)
 
 **Accounts:**
-- BSN.cloud account (free tier available) - required for Remote DWS and cloud management
+- BrightSign Control account (free tier available) - required for Remote DWS and cloud management
 
 ---
 
@@ -116,7 +116,7 @@ BrightSign offers two approaches to device management and development. Choose ba
 | Approach | Best For | Requirements |
 |----------|----------|--------------|
 | **Local Control** | On-premise development, no cloud dependency | Player on local network |
-| **Cloud Control** | Remote management, fleet operations, CI/CD | BSN.cloud account + API credentials |
+| **Cloud Control** | Remote management, fleet operations, CI/CD | BrightSign Control account + API credentials |
 
 You can use both approaches simultaneously.
 
@@ -129,6 +129,8 @@ Local control uses the Local Diagnostic Web Server (LDWS) built into every Brigh
 ### Step 1: Enable Local DWS
 
 The DWS is **disabled by default** due to EU Radio Equipment Directive (RED) compliance. Enable it by running this BrightScript on your player:
+
+> **Two registry keys matter here, and they do different jobs.** `dwse` turns the Local DWS **on**. `bbhf` decides **which API surface** it serves: set, you get the modern `/api/v1/...` REST API (~127 routes) plus the legacy endpoints; unset, you get only the pre-BrightSign-Control legacy DWS. If half the REST endpoints 404 on a player, check `bbhf` before debugging your client. The Quick Start script above sets both.
 
 Create a file called `autorun.brs` with the following content:
 
@@ -205,13 +207,13 @@ bsc reboot
 
 ---
 
-## Cloud Control: Remote DWS via BSN.cloud
+## Cloud Control: Remote DWS via BrightSign Control
 
-Cloud control enables remote management from anywhere using BSN.cloud and the Remote DWS (RDWS) API.
+Cloud control enables remote management from anywhere using BrightSign Control and the Remote DWS (RDWS) API.
 
 ### Step 1: Get API Credentials
 
-1. Log into [BSN.cloud](https://www.bsn.cloud)
+1. Log into [BrightSign Control](https://www.bsn.cloud)
 2. Navigate to **Admin** → **API Access**
 3. Create new OAuth2 credentials
 4. Note your **Client ID** and **Secret**
@@ -220,7 +222,7 @@ Cloud control enables remote management from anywhere using BSN.cloud and the Re
 
 **Option A: gopurple SDK (Recommended)**
 
-The [gopurple SDK](https://github.com/BrightDevelopers/gopurple) provides 73 ready-to-use CLI tools for BSN.cloud operations.
+The [gopurple SDK](https://github.com/BrightDevelopers/gopurple) provides 65 ready-to-use CLI tools for BrightSign Control operations.
 
 ```bash
 # Set credentials
@@ -240,7 +242,7 @@ make build-examples
 ./bin/rdws-files-list --serial BS123456789 --path /storage/sd/
 ```
 
-See the complete list of 34 Remote DWS tools in the [gopurple examples documentation](https://github.com/BrightDevelopers/gopurple/blob/main/examples/README.md#remote-dws-operations-34).
+See the complete list of 30 Remote DWS tools in the [gopurple examples documentation](https://github.com/BrightDevelopers/gopurple/blob/main/examples/README.md).
 
 **Option B: Direct REST API**
 
@@ -326,6 +328,44 @@ ssh brightsign@192.168.1.100
 ssh brightsign@brightsign-D4A3B2C1.local
 ```
 
+#### `brightsign` is the only SSH user
+
+There is no `root` SSH login on any build. `ssh root@<player>` will fail authentication — a failure that looks like a misconfigured player but is not. The root Linux shell is reached only by *descending* through the shell layers (see [Interactive Debugging](#interactive-debugging-descending-through-the-shell-layers)), and only on an insecured development unit.
+
+#### SSH attaches to whatever layer is currently running
+
+You do not land at a fixed prompt. The session connects to the player's current layer, which is one of:
+
+| Layer | What you see |
+|-------|--------------|
+| **Application** | The console of the running application (typically `autorun.brs`), flooded with its log stream — lines prefixed `{ <seconds>}` |
+| **BrightScript Debugger** | `BrightScript Debugger>` — the application is stopped at a breakpoint or was interrupted |
+| **BrightSign Shell** | `BrightSign> ` — autorun has already been stopped |
+| **Root Linux shell** | `#` — an insecured player already descended all the way down |
+
+On a normally running player you land on the **application console**, not a prompt. Use the descent described below to reach a usable shell.
+
+#### One-shot SSH commands do not work
+
+The `brightsign` login is an interactive REPL, not a Unix shell, and it has no `-c` form:
+
+```bash
+# This does NOT work - the BrightSign Shell answers: Unknown command: -c ls
+ssh brightsign@192.168.1.100 "ls /var/volatile/bsext/"
+```
+
+Any command must be typed into an **interactive** session that you have first descended to the correct layer. To automate, hold a pseudo-terminal (Python's standard-library `pty` module is sufficient), synchronize on the `BrightSign> ` prompt, and discard console-log lines matching `^\s*\{\s*\d+\.\d+\}`.
+
+Once you reach the **root Linux shell** on an insecured player, you are in bash and chained one-shot commands work normally there; wrap them in sentinels (`echo __START__; cmd; echo __END__:$?`) if you are parsing the output.
+
+`scp` uses a separate subsystem and is unaffected by any of this — file transfer works normally:
+
+```bash
+scp autorun.brs brightsign@192.168.1.100:/storage/sd/
+```
+
+For anything scriptable, prefer the [Local DWS REST API](#method-4-local-dws-api) — it is a normal HTTP surface with no REPL to drive.
+
 ### Telnet (Development Only)
 
 Telnet is unencrypted and should only be used in isolated development environments.
@@ -384,17 +424,21 @@ bsc put -r ./content/ /storage/sd/content/
 
 Using curl:
 
+The DWS requires **digest** authentication — `curl -u` alone returns `401 Unauthorized`, so `--digest` is mandatory. The username is always `admin`.
+
 ```bash
 # Upload file
-curl -u admin:password -X PUT \
+curl --digest -u admin:<dws-password> -X PUT \
   -F "file=@index.html" \
   http://192.168.1.100/api/v1/files/sd/index.html
 
-# Download file
-curl -u admin:password \
+# Download file (?contents&stream returns raw bytes; ?contents alone returns base64)
+curl --digest -u admin:<dws-password> \
   "http://192.168.1.100/api/v1/files/sd/logs/app.log?contents&stream" \
   -o app.log
 ```
+
+This surface requires the Supervisor to be running. If you have descended to the root Linux shell over SSH, the Supervisor is stopped and every call here fails — see [Interactive Debugging](#interactive-debugging-descending-through-the-shell-layers).
 
 ### Method 5: VS Code Integration
 
@@ -498,13 +542,60 @@ End Sub
 
 ---
 
-## Interactive Debugging: Ctrl-C Behavior
+## Interactive Debugging: Descending Through the Shell Layers
 
-When connected via SSH or serial while your application is running, you can use Ctrl-C to access debugging tools.
+A player presents four stacked layers over a single SSH or serial session. You move **down** through them one step at a time, and each step uses a different key or command:
+
+```text
+console (running application - autorun.brs log stream)
+   |  Ctrl-C, then Enter        <-- STOPS THE APPLICATION
+BrightScript Debugger>          requires registry brightscript.debug = 1
+   |  exit
+BrightSign>                     the BrightSign Shell
+   |  exit                      <-- STOPS THE SUPERVISOR
+#                               root Linux shell (bash) - INSECURED PLAYERS ONLY
+```
+
+**Each descent costs you something. Know what you are giving up before you take the step.**
+
+> ### Leaving the application: your application stops
+>
+> `Ctrl-C` into the BrightScript Debugger **stops the running `autorun.brs`**. That is the whole point — the application is halted at its current execution point so you can inspect it, which is what makes `bt`, `var`, and `print` meaningful. But it also means the presentation has stopped: the screen is no longer being driven by your application, and it will stay that way until you `cont` or reboot.
+>
+> Never do this to a player that is serving content.
+
+> ### Leaving the BrightSign Shell: the Supervisor stops
+>
+> The second `exit` — from `BrightSign>` down into the root Linux shell — **stops the Supervisor**. The Supervisor is the player's running control plane, and critically, **it is the process that serves the Diagnostic Web Server**. Once it is gone, the entire DWS surface is gone with it.
+>
+> For the rest of that session every DWS-backed call fails:
+>
+> - `PUT /api/v1/control/reboot` and every other `/api/v1/...` route
+> - `/api/v1/files/...` uploads and downloads
+> - the registry endpoints
+> - the `bsc` CLI, which is DWS-backed
+> - Remote DWS through BrightSign Control
+>
+> These do not fail with a clear "service stopped" message. They fail like a network outage or an authentication problem, so it is easy to spend a long time debugging the wrong layer. If your DWS calls suddenly stop working on a player you have been driving over SSH, this is almost always why.
+>
+> Two consequences worth planning around:
+>
+> 1. **Do all DWS work before you descend to the root shell.** Upload files, read the registry over HTTP, and take snapshots first. Once you are at `#`, that surface is gone for the rest of the session.
+> 2. **`exit` is the only way back.** From the root shell there is exactly one route back to a running application: type **`exit`**, which reboots the player. You **cannot** call `PUT /api/v1/control/reboot` to get there — that endpoint is served by the Supervisor you just stopped, so the call cannot possibly succeed. The same applies to `bsc reboot` and Remote DWS. There is no way to restart the Supervisor in place and no way to relaunch the application without a reboot.
+>
+> ```text
+> #  <- you are here; no DWS, no bsc, no RDWS
+> |
+> |  exit          the ONLY way out
+> v
+> reboot -> Supervisor restarts -> autorun.brs runs -> DWS available again
+> ```
+>
+> If you find yourself at a root shell wondering why the reboot API is timing out, stop debugging the API. Type `exit`.
 
 ### First Ctrl-C: BrightScript Debugger
 
-Pressing Ctrl-C the first time breaks into the BrightScript debugger at the current execution point.
+Pressing Ctrl-C the first time breaks into the BrightScript debugger at the current execution point. Press Enter if the prompt does not appear immediately. Log output continues to stream while you are in the debugger — that is normal, not a sign the break failed.
 
 **Debugger commands:**
 
@@ -538,9 +629,15 @@ BrightScript Debugger> ? data.count()
 BrightScript Debugger> cont
 ```
 
-### Second Ctrl-C: BrightSign Shell
+### From the Debugger to the BrightSign Shell: type `exit`
 
-Pressing Ctrl-C again (from the debugger) drops to the BrightSign shell, providing OS-level access.
+From the debugger, type **`exit`** to reach the BrightSign Shell (prompt `BrightSign> `), which provides OS-level access. The shell prints `Welcome to the BrightSign Shell version <v>` on entry, and the log stream goes quiet — your application was already stopped by the `Ctrl-C`, and leaving the debugger abandons it rather than continuing it.
+
+The Supervisor is still running at this level, so the DWS APIs still work. They stop working only if you take the next step down into the root Linux shell.
+
+> **A second Ctrl-C does *not* reach the BrightSign Shell.** It only re-fires SIGINT — you will see `SignalDispatcher received signal 2` and remain in the debugger. This is the single most common wrong assumption about the platform. The debugger-to-shell step is the debugger's own `exit` command, and nothing else.
+
+If you type a shell-style word while still in the debugger, it is compiled as BrightScript and you get `Syntax Error (compile error) $LIVECOMPILE(...)`. That error means you are still one level up, in the debugger, and have not reached the shell yet.
 
 **Useful shell commands:**
 
@@ -570,9 +667,9 @@ script                      # Return to BrightScript debugger
 
 ### Typing `exit`
 
-**From BrightScript debugger:** Returns to shell or continues execution
+**From the BrightScript debugger:** drops to the BrightSign Shell. This is the only way to get there.
 
-**From BrightSign shell:** **Reboots the player** by default
+**From the BrightSign shell:** **Reboots the player** by default
 
 **Exception - "Insecured" Mode:**
 
@@ -703,6 +800,7 @@ Sub Main()
     regB.Flush()
 
     reg = CreateObject("roRegistrySection", "networking")
+    ' Expose the modern /api/v1 REST API (without this you get only the legacy DWS)
     reg.Write("bbhf", "on")
     ' Enable Local DWS
     reg.Write("dwse", "yes")
@@ -785,7 +883,7 @@ ssh brightsign@192.168.1.100
 # 5. Debug if needed
 # Press Ctrl-C to enter debugger
 # Use 'var', 'bt', 'print' to inspect state
-# Press 'c' to continue or Ctrl-C again for shell
+# Press 'c' to continue, or type 'exit' to drop to the BrightSign Shell
 ```
 
 ---
@@ -797,7 +895,7 @@ ssh brightsign@192.168.1.100
 | Simple video signage | BrightScript + video files |
 | Interactive kiosk | HTML5 + JavaScript + autorun.brs launcher |
 | Data-driven displays | Node.js server + REST APIs |
-| Cloud fleet management | gopurple SDK + BSN.cloud |
+| Cloud fleet management | gopurple SDK + BrightSign Control |
 | CI/CD automation | gopurple CLI tools or @brightsign/bsc |
 | Rapid prototyping | VS Code + SFTP auto-upload |
 

@@ -14,7 +14,7 @@ This guide covers implementing security best practices for BrightSign deployment
 - Development vs production configuration
 - Content security and integrity
 - Network security best practices
-- BSN.cloud security integration
+- BrightSign Control security integration
 - Extension security
 - Physical security considerations
 - Secure provisioning methods
@@ -36,7 +36,7 @@ This guide covers implementing security best practices for BrightSign deployment
 - Understanding of security principles
 - BrightSign player for deployment
 - Network security knowledge
-- BSN.cloud account (for cloud features)
+- BrightSign Control account (for cloud features)
 - Development environment set up ([see setup guide](01-setting-up-development-environment.md))
 
 ---
@@ -258,7 +258,7 @@ async function fetchSecurely(url) {
 
 **Minimum required outbound ports:**
 ```
-Port 443 (HTTPS): BSN.cloud, content delivery
+Port 443 (HTTPS): BrightSign Control, content delivery
 Port 80 (HTTP): Legacy services, diagnostics
 Port 123 (NTP): Time synchronization
 ```
@@ -293,11 +293,12 @@ End Sub
 **Install custom CA certificates:**
 
 ```bash
-# Copy certificate to player
-scp ca-bundle.crt root@192.168.1.100:/storage/sd/
+# Copy certificate to player (brightsign is the only SSH user)
+scp ca-bundle.crt brightsign@192.168.1.100:/storage/sd/
 
-# Install certificate
-ssh root@192.168.1.100
+# Install certificate: SSH in, then descend to the root Linux shell
+# (Ctrl-C + Enter, exit, exit) - insecured development players only
+ssh brightsign@192.168.1.100
 mkdir -p /etc/ssl/certs
 cp /storage/sd/ca-bundle.crt /etc/ssl/certs/
 update-ca-certificates
@@ -319,7 +320,7 @@ urlTransfer.EnableHostVerification(true)
 
 ---
 
-## Part 5: BSN.cloud Security
+## Part 5: BrightSign Control Security
 
 ### OAuth2 Authentication
 
@@ -984,13 +985,13 @@ End Sub
 
 - [Debugging Production Issues](17-debugging-production-issues.md) - Investigate security incidents
 - [Building Custom Extensions](16-building-custom-extensions.md) - Secure extension development
-- [Setting Up BSN.cloud](10-setting-up-bsn-cloud.md) - Cloud security features
+- [Setting Up BrightSign Control](10-setting-up-bsn-cloud.md) - Cloud security features
 
 ---
 
 ## Additional Resources
 
-- [BSN.Cloud Network Security](https://docs.brightsign.biz/advanced/bsncloud-network-security)
+- [BrightSign Control Network Security](https://docs.brightsign.biz/advanced/bsncloud-network-security)
 - [BrightSign Network (BSN) Security](https://docs.brightsign.biz/advanced/brightsign-network-bsn-security)
 - [BrightSign Security Statements](https://support.brightsign.biz/hc/en-us/sections/360008618754-BrightSign-Security-Announcements)
 - OWASP Top 10: owasp.org/top-ten

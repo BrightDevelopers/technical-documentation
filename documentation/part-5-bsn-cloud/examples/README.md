@@ -1,27 +1,18 @@
-# BSN.cloud Examples
+# BrightSign Control Examples
 
 [← Back to Part 5](../README.md)
 
 ---
 
-Python and JavaScript examples for BSN.cloud API integration.
+Examples for BrightSign Control API integration.
 
-## Categories
+| Category | Description | Status |
+|----------|-------------|--------|
+| Provisioning | Bulk device setup and registration scripts | *Coming soon* |
+| Player Control | Remote commands and device monitoring | *Coming soon* |
+| Content Management | Content upload, scheduling, and synchronization | *Coming soon* |
 
-### [Provisioning](provisioning/)
-Bulk device setup and registration scripts.
-
-*Examples coming soon.*
-
-### [Player Control](player-control/)
-Remote commands and device monitoring.
-
-*Examples coming soon.*
-
-### [Content Management](content-management/)
-Content upload, scheduling, and synchronization.
-
-*Examples coming soon.*
+In the meantime, the **[gopurple SDK](https://github.com/BrightDevelopers/gopurple)** ships 65 runnable example CLI tools covering device management, Remote DWS operations, and B-Deploy provisioning. See [Programming Against the Cloud with gopurple](../05-programming-with-gopurple.md) for how to use them.
 
 ---
 

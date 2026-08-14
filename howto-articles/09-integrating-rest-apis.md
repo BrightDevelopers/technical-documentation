@@ -1002,7 +1002,7 @@ End Sub
 
 ## Next Steps
 
-- [Setting Up BSN.cloud](10-setting-up-bsn-cloud.md) - Connect players to BrightSign's cloud platform
+- [Setting Up BrightSign Control](10-setting-up-bsn-cloud.md) - Connect players to BrightSign's cloud platform
 - [Implementing Live Data Feeds](11-implementing-live-data-feeds.md) - Display real-time information
 
 ---

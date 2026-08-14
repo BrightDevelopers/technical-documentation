@@ -1,4 +1,4 @@
-# Chapter 5: Plugin Architecture
+# Plugin Architecture
 
 [← Back to Part 2: BrightScript Development](README.md) | [↑ Main](../../README.md)
 
@@ -838,7 +838,7 @@ These patterns scale from simple utilities to complex production systems, provid
 
 ## Next Steps
 
-Continue to [Chapter 6: JavaScript Playback](../chapter06-javascript-playback/) to learn HTML5 and JavaScript development for media applications.
+Continue to [JavaScript Playback](../part-3-javascript-development/01-javascript-playback.md) to learn HTML5 and JavaScript development for media applications.
 
 
 ---

@@ -1,4 +1,4 @@
-# Chapter 11: Advanced Native Extensions
+# Advanced Native Extensions
 
 [← Back to Part 4: Advanced Topics](README.md) | [↑ Main](../../README.md)
 
@@ -16,7 +16,7 @@ Native extensions must be compiled for BrightSign's ARM architecture. This requi
 
 - Linux x86_64 development host (Ubuntu 20.04+ recommended)
 - Docker installed and configured
-- At least 100GB free disk space
+- At least ~50GB free disk space
 - High-speed internet connection
 - Several hours for initial SDK build
 
@@ -438,11 +438,13 @@ mksquashfs staging extension.squashfs \
 
 ### Manual Installation
 
+The `mkdir`/`mount` steps below require the **root Linux shell**, which exists only on an insecured development player. SSH drops you onto the running application's console, so you must descend first: `Ctrl-C` then Enter (BrightScript Debugger), `exit` (BrightSign Shell), `exit` again (root Linux shell). One-shot commands over SSH do not work — type these into the descended session.
+
 ```bash
-# Transfer to player
+# Transfer to player (scp is a separate subsystem and works normally)
 scp extension.squashfs brightsign@192.168.1.100:/storage/sd/
 
-# SSH to player
+# SSH to player, then descend to the root Linux shell
 ssh brightsign@192.168.1.100
 
 # Create mount point and install
@@ -523,7 +525,7 @@ For deployment on secure (production) players, extensions must be cryptographica
 
 Signed extensions are distributed as `.bsfw` files (BrightSign FirmWare format). These can be:
 
-- Installed via BSN.cloud
+- Installed via BrightSign Control
 - Deployed with presentation packages
 - Installed via USB during setup
 

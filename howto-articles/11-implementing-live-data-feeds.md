@@ -1225,7 +1225,7 @@ const feed = new ResilientFeed('https://api.example.com/data', {
 
 - [Fetching Remote Content](08-fetching-remote-content.md) - Download and cache content
 - [Integrating with REST APIs](09-integrating-rest-apis.md) - Consume external APIs
-- [Setting Up BSN.cloud](10-setting-up-bsn-cloud.md) - Connect to cloud management
+- [Setting Up BrightSign Control](10-setting-up-bsn-cloud.md) - Connect to cloud management
 
 ---
 

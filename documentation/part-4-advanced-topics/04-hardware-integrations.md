@@ -1,4 +1,4 @@
-# Chapter 12: Hardware Integrations
+# Hardware Integrations
 
 [← Back to Part 4: Advanced Topics](README.md) | [↑ Main](../../README.md)
 
@@ -1362,7 +1362,7 @@ endif
 
 ## Next Steps
 
-Continue to [Chapter 13: Integrating with BSN.cloud](../chapter13-integrating-with-bsn-cloud/) to learn about cloud-based content management and remote device control.
+Continue to [Integrating with BrightSign Control](../part-5-bsn-cloud/01-integrating-with-bsn-cloud.md) to learn about cloud-based content management and remote device control.
 
 ## Additional Resources
 

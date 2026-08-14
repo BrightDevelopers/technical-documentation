@@ -1,18 +1,18 @@
-# Chapter 13: Integrating with BSN.cloud
+# Integrating with BrightSign Control
 
-[← Back to Part 5: BSN Cloud](README.md) | [↑ Main](../../README.md)
+[← Back to Part 5: BrightSign Control](README.md) | [↑ Main](../../README.md)
 
 ---
 
 ## Introduction
 
-BSN.cloud (BrightSign Network cloud) is BrightSign's cloud-based content management and device control platform. It provides a comprehensive solution for managing digital signage networks at scale, from single installations to enterprise deployments with thousands of players. This chapter covers BSN.cloud integration, including provisioning, content management, remote control, and API-based automation.
+BrightSign Control (BrightSign Network cloud) is BrightSign's cloud-based content management and device control platform. It provides a comprehensive solution for managing digital signage networks at scale, from single installations to enterprise deployments with thousands of players. This chapter covers BrightSign Control integration, including provisioning, content management, remote control, and API-based automation.
 
-## BSN.cloud Overview
+## BrightSign Control Overview
 
 ### Cloud Architecture
 
-BSN.cloud uses a distributed cloud architecture with the following components:
+BrightSign Control uses a distributed cloud architecture with the following components:
 
 - **Control Plane**: Manages device registration, authentication, and command distribution
 - **Content Delivery Network (CDN)**: Delivers media files and presentations to players
@@ -24,7 +24,7 @@ The architecture supports high availability and scales to accommodate networks o
 
 ### Service Tiers and Features
 
-BSN.cloud offers multiple service tiers:
+BrightSign Control offers multiple service tiers:
 
 **bsn.Control** (Free tier):
 - Basic device provisioning and activation
@@ -35,7 +35,7 @@ BSN.cloud offers multiple service tiers:
 
 **bsn.Content** (Paid subscription):
 - Full content management capabilities
-- BrightAuthor:connected presentation authoring
+- BrightSign Author presentation authoring
 - Content library with versioning
 - Scheduled content deployment
 - Advanced analytics and reporting
@@ -51,7 +51,7 @@ BSN.cloud offers multiple service tiers:
 
 ### Account Setup
 
-To get started with BSN.cloud:
+To get started with BrightSign Control:
 
 1. Create an account at https://www.bsn.cloud
 2. Verify your email address
@@ -72,7 +72,7 @@ For API access, you'll need client credentials:
 
 ### Organization Structure
 
-BSN.cloud uses a hierarchical organization model:
+BrightSign Control uses a hierarchical organization model:
 
 - **Person**: Individual user account with email/password credentials
 - **Network**: Container for players, content, and presentations
@@ -84,7 +84,7 @@ BSN.cloud uses a hierarchical organization model:
 
 ### User Management
 
-Manage users through the BSN.cloud web interface or REST API:
+Manage users through the BrightSign Control web interface or REST API:
 
 ```http
 GET /2020/10/REST/Users/
@@ -103,7 +103,7 @@ Users can have various permission levels:
 Players can be registered through multiple methods:
 
 **Manual Registration** (Web UI):
-1. Log into BSN.cloud
+1. Log into BrightSign Control
 2. Navigate to Devices section
 3. Click "Add Device"
 4. Enter serial number
@@ -138,7 +138,7 @@ When a BrightSign player boots without local content:
 
 1. Player displays on-screen activation interface
 2. User can enter activation code or wait for auto-provisioning
-3. Player contacts BSN.cloud activation servers
+3. Player contacts BrightSign Control activation servers
 4. If serial number is registered, player downloads setup package
 5. Player configures itself and downloads assigned presentation
 6. Player begins playback and maintains cloud connection
@@ -176,9 +176,9 @@ Starting with BrightSignOS 8.4.6, interface metrics are automatically assigned:
 
 ### Security Certificates
 
-BSN.cloud uses TLS certificates for secure communication:
+BrightSign Control uses TLS certificates for secure communication:
 
-- **Server Certificates**: BSN.cloud uses industry-standard CA certificates
+- **Server Certificates**: BrightSign Control uses industry-standard CA certificates
 - **Client Authentication**: Players authenticate using OAuth2 device credentials
 - **Certificate Pinning**: Optional for enhanced security in sensitive deployments
 
@@ -211,7 +211,7 @@ async function bulkRegisterDevices(serialNumbers, setupId, accessToken) {
 
 ### Content Library Organization
 
-BSN.cloud organizes content in a virtual file system:
+BrightSign Control organizes content in a virtual file system:
 
 ```
 /Root
@@ -245,7 +245,7 @@ async function listContent(virtualPath, accessToken) {
 
 ### Media Upload and Storage
 
-Upload content files to BSN.cloud:
+Upload content files to BrightSign Control:
 
 ```javascript
 // Upload content file
@@ -272,7 +272,7 @@ Storage considerations:
 
 ### Content Versioning
 
-BSN.cloud maintains content version history:
+BrightSign Control maintains content version history:
 
 ```javascript
 // Retrieve content metadata including version info
@@ -325,7 +325,7 @@ await addContentTags(123, {
 
 ### Content Distribution
 
-BSN.cloud uses CDN-based distribution:
+BrightSign Control uses CDN-based distribution:
 
 - Content is cached at edge locations globally
 - Players download from nearest CDN node
@@ -335,28 +335,28 @@ BSN.cloud uses CDN-based distribution:
 
 ## Presentation Creation
 
-### BrightAuthor:connected
+### BrightSign Author
 
-BrightAuthor:connected is the desktop authoring tool for BSN.cloud:
+BrightSign Author is the desktop authoring tool for BrightSign Control:
 
 **Key Features**:
 - Visual timeline-based editing
 - Multi-zone layout support
 - Interactive state machine creation
 - Live data feed integration
-- Direct publishing to BSN.cloud
+- Direct publishing to BrightSign Control
 
 **Workflow**:
-1. Launch BrightAuthor:connected
-2. Sign in with BSN.cloud credentials
+1. Launch BrightSign Author
+2. Sign in with BrightSign Control credentials
 3. Create or open presentation
 4. Add media zones and content
 5. Configure interactivity and transitions
-6. Publish to BSN.cloud network
+6. Publish to BrightSign Control network
 
 ### Web-Based Authoring
 
-BSN.cloud provides web-based presentation editing:
+BrightSign Control provides web-based presentation editing:
 
 - Template-based creation
 - Drag-and-drop interface
@@ -473,7 +473,7 @@ async function publishPresentation(presentationId, deviceIds, accessToken) {
 
 Players synchronize content automatically:
 
-- **Check-in Interval**: Players contact BSN.cloud periodically (default: 15 minutes)
+- **Check-in Interval**: Players contact BrightSign Control periodically (default: 15 minutes)
 - **Change Detection**: Players download only modified content
 - **Hash Verification**: Content integrity verified using SHA256
 - **Retry Logic**: Failed downloads automatically retry with exponential backoff
@@ -546,7 +546,7 @@ async function getDeviceStatus(deviceId, accessToken) {
 
 ### Health Checks
 
-BSN.cloud performs automated health checks:
+BrightSign Control performs automated health checks:
 
 - **Connectivity**: Device online/offline status
 - **Storage**: Available storage space
@@ -608,7 +608,7 @@ Access via Remote DWS (Diagnostic Web Server) API.
 
 ### REST API Overview
 
-BSN.cloud provides comprehensive REST APIs:
+BrightSign Control provides comprehensive REST APIs:
 
 **Base URLs**:
 - Main API: `https://api.bsn.cloud/2020/10/REST/`
@@ -621,7 +621,7 @@ BSN.cloud provides comprehensive REST APIs:
 
 ### Authentication
 
-BSN.cloud uses OAuth2 client credentials flow for authentication. Credentials are passed via HTTP Basic authentication:
+BrightSign Control uses OAuth2 client credentials flow for authentication. Credentials are passed via HTTP Basic authentication:
 
 ```javascript
 // Obtain access token
@@ -716,7 +716,7 @@ async function deleteContent(contentId, accessToken) {
 
 ### Webhook Integration
 
-BSN.cloud can send webhooks for events:
+BrightSign Control can send webhooks for events:
 
 - **Device Events**: Online/offline, errors
 - **Content Events**: Upload complete, sync status
@@ -1030,7 +1030,7 @@ async function deployPlugin(pluginFile, deviceIds, accessToken) {
 
 ### Third-Party Integrations
 
-BSN.cloud integrates with external systems:
+BrightSign Control integrates with external systems:
 
 - **CMS Integration**: Connect to external content management systems
 - **Analytics Platforms**: Export data to Google Analytics, Adobe Analytics
@@ -1041,7 +1041,7 @@ BSN.cloud integrates with external systems:
 
 ### Secure Communications
 
-All BSN.cloud communications are encrypted:
+All BrightSign Control communications are encrypted:
 
 - **TLS 1.2+**: All HTTPS/WebSocket connections
 - **Certificate Validation**: Verify server certificates
@@ -1097,7 +1097,7 @@ Access audit logs via API or web interface.
 
 ### GDPR Compliance
 
-BSN.cloud supports GDPR requirements:
+BrightSign Control supports GDPR requirements:
 
 - **Data Minimization**: Collect only necessary data
 - **Right to Access**: Users can export their data
@@ -1112,7 +1112,7 @@ BSN.cloud supports GDPR requirements:
 **Player Not Connecting**:
 - Verify network connectivity
 - Check firewall rules (ports 80, 443, WebSocket)
-- Confirm player is registered in BSN.cloud
+- Confirm player is registered in BrightSign Control
 - Check device activation status
 
 **Content Not Downloading**:
@@ -1150,17 +1150,17 @@ Protocols:
 Test connectivity from player:
 
 ```brightscript
-' Test BSN.cloud connectivity
+' Test BrightSign Control connectivity
 function TestBSNConnectivity() as Boolean
   urlTransfer = CreateObject("roUrlTransfer")
   urlTransfer.SetUrl("https://api.bsn.cloud/health")
 
   response = urlTransfer.GetToString()
   if response <> "" then
-    print "BSN.cloud connectivity: OK"
+    print "BrightSign Control connectivity: OK"
     return true
   else
-    print "BSN.cloud connectivity: FAILED"
+    print "BrightSign Control connectivity: FAILED"
     return false
   end if
 end function
@@ -1193,7 +1193,7 @@ async function forceSyncDevice(deviceId, accessToken) {
 
 ### Performance Optimization
 
-Optimize BSN.cloud integration:
+Optimize BrightSign Control integration:
 
 **Content Optimization**:
 - Compress images and videos
@@ -1215,10 +1215,10 @@ Optimize BSN.cloud integration:
 
 ### Support Resources
 
-Get help with BSN.cloud:
+Get help with BrightSign Control:
 
 - **Documentation**: https://docs.brightsign.biz
-- **API Reference**: https://docs.brightsign.biz/display/DOC/BSN.cloud+APIs
+- **API Reference**: https://docs.brightsign.biz/display/DOC/BrightSign Control+APIs
 - **Support Portal**: https://support.brightsign.biz
 - **Community Forum**: https://forums.brightsign.biz
 - **Email Support**: support@brightsign.biz
@@ -1226,12 +1226,12 @@ Get help with BSN.cloud:
 
 ## Required Resources
 
-To work with BSN.cloud integration, you need:
+To work with BrightSign Control integration, you need:
 
 **Accounts and Credentials**:
-- BSN.cloud account (free or paid)
+- BrightSign Control account (free or paid)
 - API client credentials (from BrightSign support)
-- Network ID (from BSN.cloud dashboard)
+- Network ID (from BrightSign Control dashboard)
 
 **Hardware**:
 - BrightSign player(s) with network connectivity
@@ -1239,14 +1239,14 @@ To work with BSN.cloud integration, you need:
 - Display(s) connected to players
 
 **Software**:
-- BrightAuthor:connected (for presentation authoring)
-- Web browser (for BSN.cloud web interface)
+- BrightSign Author (for presentation authoring)
+- Web browser (for BrightSign Control web interface)
 - Development tools (for API integration)
 
 **Network Requirements**:
 - Outbound internet access (HTTPS, WebSocket)
 - Adequate bandwidth for content delivery
-- Firewall configuration for BSN.cloud endpoints
+- Firewall configuration for BrightSign Control endpoints
 
 ## Best Practices
 
@@ -1385,7 +1385,7 @@ setInterval(() => monitorDevices(token), 300000);
 
 ## Summary
 
-BSN.cloud provides a comprehensive cloud platform for managing BrightSign digital signage networks. Key capabilities include:
+BrightSign Control provides a comprehensive cloud platform for managing BrightSign digital signage networks. Key capabilities include:
 
 - **Centralized Management**: Control all devices from a single interface
 - **Automated Provisioning**: Streamline device deployment with B-Deploy
@@ -1396,11 +1396,11 @@ BSN.cloud provides a comprehensive cloud platform for managing BrightSign digita
 - **Security**: Enterprise-grade security and compliance
 - **Scalability**: Supports networks from single displays to thousands
 
-By leveraging BSN.cloud APIs and following best practices, you can build scalable, secure, and efficient digital signage solutions that meet enterprise requirements.
+By leveraging BrightSign Control APIs and following best practices, you can build scalable, secure, and efficient digital signage solutions that meet enterprise requirements.
 
-For the latest API documentation and updates, visit: https://docs.brightsign.biz/display/DOC/BSN.cloud+APIs
+For the latest API documentation and updates, visit: https://docs.brightsign.biz/display/DOC/BrightSign Control+APIs
 
 
 ---
 
-[↑ Part 5: BSN Cloud](README.md) | [Next →](02-automated-provisioning.md)
+[↑ Part 5: BrightSign Control](README.md) | [Next →](02-automated-provisioning.md)
