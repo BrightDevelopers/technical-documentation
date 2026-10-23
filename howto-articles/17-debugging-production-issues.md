@@ -116,6 +116,8 @@ reg.Flush()
 telnet 192.168.1.100
 ```
 
+On an **insecured development player**, `registry networking telnet_server 23` instead starts a passwordless raw root `/bin/sh` on port 23 that leaves the Supervisor and application running -- invaluable for live debugging. See [Setting Up Your Development Environment](01-setting-up-development-environment.md#raw-root-shell-telnet_server) (Telnet, Development Only). Never enable this on a production or secured player.
+
 ### Method 4: Local DWS (Diagnostic Web Server)
 
 Access via web browser:
