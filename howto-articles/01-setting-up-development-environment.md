@@ -381,6 +381,32 @@ RebootSystem()
 telnet 192.168.1.100
 ```
 
+#### Raw root shell: `telnet_server`
+
+On an insecured player, the `networking/telnet_server` registry key starts a second telnet daemon whose login shell is `/bin/sh` -- a direct Linux **root** shell with **no password** and no BrightSign Shell in front of it. Enable it on the player (as root), then reboot:
+
+```sh
+registry networking telnet_server 23
+```
+
+Connect from your workstation:
+
+```sh
+telnet <player-ip> 23
+```
+
+You land directly at a root prompt (`#`). This is the most useful shell for troubleshooting: descending through the BrightSign Shell (Ctrl-C, then `exit`) stops the Supervisor and with it the DWS and the rest of the control plane (see [Interactive Debugging: Descending Through the Shell Layers](#interactive-debugging-descending-through-the-shell-layers)). `telnet_server` is a **separate** daemon, so you get root **while the Supervisor and the BrightScript/BrightSign application layer keep running** -- you can inspect live processes, logs, mounts, and your running extension without disturbing anything:
+
+```sh
+ps aux
+logread | tail
+ls /var/volatile/bsext/
+```
+
+It only starts on an insecured player: BrightSignOS checks `/proc/boardid` for `Secure-keys: 0` and skips the `/bin/sh` telnetd on a secured player.
+
+> **Warning:** Telnet is cleartext -- the session and anything typed into it travel unencrypted. Use it only on an isolated development network, and prefer SSH otherwise. The separate `networking/telnet` key (without `_server`) gives the *managed* BrightSign shell and works on secured players, but it does not give the raw root shell.
+
 ---
 
 ## File Transfer Methods
@@ -810,6 +836,11 @@ Sub Main()
     reg.Write("prometheus-node-exporter-port", "9100")
     ' Enable SSH on port 22
     reg.Write("ssh", "22")
+    ' Enable the raw root telnet shell (/bin/sh) on port 23 for live troubleshooting.
+    ' Insecured players only. Separate daemon from the BrightSign Shell, so the
+    ' Supervisor (control plane) and your running application keep running while you
+    ' are in the shell. Telnet is cleartext -- isolated development networks only.
+    reg.Write("telnet_server", "23")
     ' Maximum telnet log verbosity
     reg.Write("telnet_log_level", "7")
     reg.Flush()
@@ -858,6 +889,7 @@ After running this autorun and manually rebooting, the player will have:
 - SSH accessible at port 22 with no password
 - BrightScript debug and verbose logging enabled
 - Prometheus metrics at port 9100
+- A raw root telnet shell (`/bin/sh`) at port 23 with no password, for live troubleshooting while the Supervisor and application keep running (`telnet <player-ip> 23`)
 
 ---
 
